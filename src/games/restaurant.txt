@@ -22,3 +22,50 @@ kind::Cost
 16.99
 17.99
 
+clue::
+diff(Yvette,Lyon's)
+diff(Yvette,14.99)
+
+clue::
+diff(16.99,Irene)
+diff(16.99,Lyon's)
+
+clue::
+diff(17.99,Lyon's)
+diff(Leon,Pork)
+xor(
+    and(
+        pair(Leon,17.99),pair(Pork,Lyon's)
+    ),
+    and(
+        pair(Leon,Lyon's),pair(Pork,17.99)
+    )
+)
+
+clue::
+or(
+    or(
+        and(
+            same(Charlie's->Cost,14.99),
+            same(Chicken->Cost,15.99)
+        ),
+        and(
+            same(Charlie's->Cost,15.99),
+            same(Chicken->Cost,16.99)
+        )
+    ),
+    and(
+        same(Charlie's->Cost,16.99),
+        same(Chicken->Cost,17.99)
+    )
+)
+
+clue::
+diff(Yvette,Irene's)
+or(
+    pair(Pork,Yvette),
+    pair(Pork,Irene's)
+)
+
+clue::
+pair(Isac,Chicken)

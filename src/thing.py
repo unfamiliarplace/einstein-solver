@@ -69,3 +69,11 @@ class Thing:
             any(((t is b) and (t is not None)) for t in a.things()),
             any(((t is a) and (t is not None)) for t in b.things())
         ))
+    
+    @staticmethod
+    def is_diff(a: Thing, b: Thing) -> bool:
+        return not Thing.is_pair(a, b)
+
+    @staticmethod
+    def same(a: Thing, b: Thing) -> bool:
+        return a == b
