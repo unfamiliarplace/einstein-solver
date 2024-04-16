@@ -1,78 +1,115 @@
+from __future__ import annotations
 from thing import Thing
+from pathlib import Path
 
-P_Leon = Thing('Leon')
-P_Yvette = Thing('Yvette')
-P_Isac = Thing('Isac')
-P_Eric = Thing('Eric')
-t1s = {P_Isac, P_Eric, P_Leon, P_Yvette}
+class Game:
+    keys: dict[str, Thing]
+    kinds: list[str]
+    t1s: set[Thing]
+    t2s: set[Thing]
+    t3s: set[Thing]
+    t4s: set[Thing]
+    sets = list[set[Thing]]
+    clues: list[function]
 
-R_Greg = Thing('Greg\'s')
-R_Irene = Thing('Irene\'s')
-R_Charlie = Thing('Charlie\'s')
-R_Lyon = Thing('Lyon\'s')
-t2s = {R_Greg, R_Irene, R_Charlie, R_Lyon}
+    def __init__(self: Game) -> None:
+        self.keys = dict()
+        self.kinds = list()
+        self.t1s = set()
+        self.t2s = set()
+        self.t3s = set()
+        self.t4s = set()
+        self.sets = [self.t1s, self.t2s, self.t3s, self.t4s]
+        self.clues = list()
 
-F_Ham = Thing('Ham')
-F_Turkey = Thing('Turkey')
-F_Chicken = Thing('Chicken')
-F_Pork = Thing('Pork')
-t3s = {F_Chicken, F_Ham, F_Pork, F_Turkey}
+    def things(self: Game) -> set[Thing]:
+        return self.t1s.union(self.t2s).union(self.t3s).union(self.t4s)
 
-C_14 = Thing('14.99')
-C_15 = Thing('15.99')
-C_16 = Thing('16.99')
-C_17 = Thing('17.99')
-t4s = {C_14, C_15, C_16, C_17}
-
-things = t1s.union(t2s).union(t3s).union(t4s)
-
-def clue_1() -> bool:
-    return not any((
-        Thing.is_pair(P_Yvette, R_Lyon),
-        Thing.is_pair(P_Yvette, C_14),
-    ))
-
-def clue_2() -> bool:
-    return not any((
-        Thing.is_pair(C_16, R_Irene),
-        Thing.is_pair(C_16, R_Lyon)
-    ))
-
-def clue_3() -> bool:
-    if any((
-        Thing.is_pair(R_Lyon, C_17), Thing.is_pair(P_Leon, F_Pork)
-    )):
-        return False
+    def __repr__(self: Game) -> str:
+        s = ''
+        n = len(max(self.kinds, key=len))
+        for i in range(len(self.sets)):
+            s += f'{self.kinds[i]:{n}} {self.sets[i]}\n'
+        
+        return s
     
-    a = Thing.is_pair(P_Leon, C_17) and Thing.is_pair(F_Pork, R_Lyon)
-    b = Thing.is_pair(P_Leon, R_Lyon) and Thing.is_pair(F_Pork, C_17)
+def parse_game(path: Path) -> Game:
+    with open(path, 'r') as f:
+        g = Game()
 
-    return (a + b) == 1
+        state = 0
+        ti = 0
 
-def clue_4() -> bool:
-    return (R_Charlie.t4, F_Chicken.t4) in (
-        (C_14, C_15),
-        (C_15, C_16),
-        (C_16, C_17)
-    )
+        for line in map(str.strip, f.readlines()):
+            if state == 0:
+                k, v = line.split('::')
+                if k == 'kind':
+                    state = 1
+                    g.kinds.append(v)
+            
+            elif state == 1:
+                if not line:
+                    state = 0
+                    ti += 1
 
-def clue_5() -> bool:
-    if Thing.is_pair(P_Yvette, R_Irene):
-        return False
+                else:
+                    t = Thing(line, g.kinds[ti])
+                    g.sets[ti].add(t)
+                    g.keys[line] = t
+
+    return g
+
+g = parse_game(Path('src/games/restaurant.txt'))
+print(g)
+
+
+# def clue_1() -> bool:
+#     return not any((
+#         Thing.is_pair(P_Yvette, R_Lyon),
+#         Thing.is_pair(P_Yvette, C_14),
+#     ))
+
+# def clue_2() -> bool:
+#     return not any((
+#         Thing.is_pair(C_16, R_Irene),
+#         Thing.is_pair(C_16, R_Lyon)
+#     ))
+
+# def clue_3() -> bool:
+#     if any((
+#         Thing.is_pair(R_Lyon, C_17), Thing.is_pair(P_Leon, F_Pork)
+#     )):
+#         return False
     
-    return any((
-        Thing.is_pair(F_Pork, P_Yvette),
-        Thing.is_pair(F_Pork, R_Irene)
-    ))
+#     a = Thing.is_pair(P_Leon, C_17) and Thing.is_pair(F_Pork, R_Lyon)
+#     b = Thing.is_pair(P_Leon, R_Lyon) and Thing.is_pair(F_Pork, C_17)
 
-def clue_6() -> bool:
-    return Thing.is_pair(P_Isac, F_Chicken)
+#     return (a + b) == 1
 
-clues = [
-    clue_1,
-    clue_2,
-    clue_3,
-    clue_4,
-    clue_5,
-    clue_6
-]
+# def clue_4() -> bool:
+#     return (R_Charlie.t4, F_Chicken.t4) in (
+#         (C_14, C_15),
+#         (C_15, C_16),
+#         (C_16, C_17)
+#     )
+
+# def clue_5() -> bool:
+#     if Thing.is_pair(P_Yvette, R_Irene):
+#         return False
+    
+#     return any((
+#         Thing.is_pair(F_Pork, P_Yvette),
+#         Thing.is_pair(F_Pork, R_Irene)
+#     ))
+
+# def clue_6() -> bool:
+#     return Thing.is_pair(P_Isac, F_Chicken)
+
+# clues = [
+#     clue_1,
+#     clue_2,
+#     clue_3,
+#     clue_4,
+#     clue_5,
+#     clue_6
+# ]

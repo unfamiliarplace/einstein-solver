@@ -2,14 +2,16 @@ from __future__ import annotations
 
 class Thing:
     id: str
+    kind: str
 
     t1: Thing
     t2: Thing
     t3: Thing
     t4: Thing
 
-    def __init__(self: Thing, id: str) -> None:
+    def __init__(self: Thing, id: str, kind: str) -> None:
         self.id = id
+        self.kind = kind
 
         self.t1 = None
         self.t2 = None
