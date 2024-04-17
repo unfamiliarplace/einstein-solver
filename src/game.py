@@ -78,7 +78,7 @@ def parse_game(path: Path) -> Game:
                 elif k == 'clue':
                     state = 2
                     c = Clue()
-                    g.clues.append(clue)
+                    g.clues.append(c)
             
             elif state == 1:
                 if not line:
