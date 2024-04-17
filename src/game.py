@@ -1,6 +1,7 @@
 from __future__ import annotations
 from thing import Thing
 from pathlib import Path
+import json
 
 class Symbol:
     name: str
@@ -59,7 +60,24 @@ class Game:
         
         return s
     
+def parse_game_2(path: Path) -> Game:
+    g = Game()
+
+    with open(path, 'r') as f:
+        data = json.loads(f.read())
+    
+    for (i, group) in enumerate(data['kinds']):
+        name, things = group['name'], group['things']
+        g.kinds.append(name)
+        for thing in things:
+            t = Thing(thing, name)
+            g.sets[i].add(t)
+            g.keys[thing] = t
+    
+    return g
+    
 def parse_game(path: Path) -> Game:
+
     with open(path, 'r') as f:
         g = Game()
 
@@ -100,7 +118,7 @@ def parse_game(path: Path) -> Game:
 
     return g
 
-g = parse_game(Path('src/games/restaurant.txt'))
+g = parse_game_2(Path('src/games/restaurant.json'))
 print(g)
 
 

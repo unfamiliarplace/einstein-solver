@@ -1,0 +1,176 @@
+{
+    "kinds": [
+        {
+            "name": "Person",
+            "things": [
+                "Leon",
+                "Yvette",
+                "Isac",
+                "Eric"
+            ]
+        },
+        {
+            "name": "Restaurant",
+            "things": [
+                "Greg's",
+                "Irene's",
+                "Charlie's",
+                "Lyon's"
+            ]
+        },
+        {
+            "name": "Food",
+            "things": [
+                "Ham",
+                "Turkey",
+                "Chicken",
+                "Pork"
+            ]
+        },
+        {
+            "name": "Cost",
+            "things": [
+                "14.99",
+                "15.99",
+                "16.99",
+                "17.99"
+            ]
+        }
+    ],
+    "clues": [
+        [
+            {
+                "func": "diff",
+                "args": ["Leon", "Yvette"]
+            },
+            {
+                "func": "diff",
+                "args": ["Yvette", "14.99"]
+            }
+        ],
+        [
+            {
+                "func": "diff",
+                "args": ["Irene", "16.99"]
+            },
+            {
+                "func": "diff",
+                "args": ["Lyon's", "16.99"]
+            }
+        ],
+        [
+            {
+                "func": "diff",
+                "args": ["Lyon's", "17.99"]
+            },
+            {
+                "func": "diff",
+                "args": ["Leon", "Pork"]
+            },
+            {
+                "func": "xor",
+                "args": [
+                    {
+                        "func": "and",
+                        "args": [
+                            {
+                                "func": "pair",
+                                "args": ["Leon", "17.99"]
+                            },
+                            {
+                                "func": "pair",
+                                "args": ["Pork", "Lyon's"
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "func": "and",
+                        "args": [
+                            {
+                                "func": "pair",
+                                "args": ["Leon", "Lyon's"]
+                            },
+                            {
+                                "func": "pair",
+                                "args": ["Pork", "17.99"]
+                            }
+                        ]
+                    }
+                ]
+
+            }
+        ],
+        [
+            {
+                "func": "or",
+                "args": [
+                    {
+                        "func": "and",
+                        "args": [
+                            {
+                                "func": "same",
+                                "args": ["Charlie's->Cost", "14.99"]
+                            },
+                            {
+                                "func": "same",
+                                "args": ["Chicken's->Cost", "15.99"]
+                            }
+                        ]
+                    },
+                    {
+                        "func": "and",
+                        "args": [
+                            {
+                                "func": "same",
+                                "args": ["Charlie's->Cost", "15.99"]
+                            },
+                            {
+                                "func": "same",
+                                "args": ["Chicken's->Cost", "16.99"]
+                            }
+                        ]
+                    },
+                    {
+                        "func": "and",
+                        "args": [
+                            {
+                                "func": "same",
+                                "args": ["Charlie's->Cost", "16.99"]
+                            },
+                            {
+                                "func": "same",
+                                "args": ["Chicken's->Cost", "17.99"]
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        [
+            {
+                "func": "diff",
+                "args": ["Yvette", "Irene's"]
+            },
+            {
+                "func": "or",
+                "args": [
+                    {
+                        "func": "pair",
+                        "args": ["Pork", "Yvette"]
+                    },
+                    {
+                        "func": "pair",
+                        "args": ["Pork", "Irene's"]
+                    }
+                ]
+            }
+        ],
+        [
+            {
+                "func": "pair",
+                "args": ["Isac", "Chicken"]
+            }
+        ]
+    ]
+}

@@ -1,3 +1,4 @@
+<game>
 <kind name='Person'>
 Leon
 Yvette
@@ -69,13 +70,27 @@ or(
 </clue>
 
 <clue>
-diff(Yvette,Irene's)
-or(
-    pair(Pork,Yvette),
-    pair(Pork,Irene's)
-)
+    <diff>
+        Yvette
+        Irene's
+    </diff>
+    <or>
+        <pair>
+            Pork
+            Yvette
+        </pair>
+        <pair>
+            Pork
+            Yvette
+        </pair>
+    </or>
 </clue>
 
 <clue>
-pair(Isac,Chicken)
+    <pair>
+        Isac
+        Chicken
+    </pair>
 </clue>
+
+</game>
