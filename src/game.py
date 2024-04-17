@@ -2,6 +2,32 @@ from __future__ import annotations
 from thing import Thing
 from pathlib import Path
 
+class Symbol:
+    name: str
+
+    def __init__(self: Symbol, name: str) -> None:
+        self.name = name
+
+    def resolve(self: Symbol, g: Game) -> Thing:
+        pass
+
+    def __hash__(self: Symbol) -> int:
+        return hash(self.name)
+
+class Rule:
+    func: function
+    symbols: set[Symbol]
+
+    def __init__(self: Rule) -> None:
+        self.func = None
+        self.symbols = set()
+
+class Clue:
+    rules: list[Rule]
+
+    def __init__(self: Clue) -> None:
+        self.rules = []
+
 class Game:
     keys: dict[str, Thing]
     kinds: list[str]
@@ -39,6 +65,8 @@ def parse_game(path: Path) -> Game:
 
         state = 0
         ti = 0
+        depth = 0
+        rules = []
 
         for line in map(str.strip, f.readlines()):
             if state == 0:
@@ -46,6 +74,11 @@ def parse_game(path: Path) -> Game:
                 if k == 'kind':
                     state = 1
                     g.kinds.append(v)
+
+                elif k == 'clue':
+                    state = 2
+                    c = Clue()
+                    g.clues.append(clue)
             
             elif state == 1:
                 if not line:
@@ -56,6 +89,14 @@ def parse_game(path: Path) -> Game:
                     t = Thing(line, g.kinds[ti])
                     g.sets[ti].add(t)
                     g.keys[line] = t
+            
+            elif state == 2:
+                if not line:
+                    state = 0
+                
+                else:
+                    pass
+            
 
     return g
 
