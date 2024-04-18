@@ -3,20 +3,12 @@ from __future__ import annotations
 class Thing:
     id: str
     kind: str
-
-    t1: Thing
-    t2: Thing
-    t3: Thing
-    t4: Thing
+    relationships: dict[str, Thing]
 
     def __init__(self: Thing, id: str, kind: str) -> None:
         self.id = id
         self.kind = kind
-
-        self.t1 = None
-        self.t2 = None
-        self.t3 = None
-        self.t4 = None
+        self.reset()
 
     def __hash__(self: Thing) -> int:
         return hash(str(self))
@@ -27,53 +19,36 @@ class Thing:
     def __eq__(self: Thing, other: Thing) -> bool:
         return str(self) == str(other)
     
-    def things(self: Thing) -> set[Thing]:
-        return {self.t1, self.t2, self.t3, self.t4}
+    def relations(self: Thing) -> set[Thing]:
+        return set(self.relationships.values())
     
     def reset(self: Thing) -> None:
-        self.t1 = None
-        self.t2 = None
-        self.t3 = None
-        self.t4 = None
+        self.relationships = {
+            self.kind: self
+        }
 
-    def add_t2(self: Thing, t2: Thing) -> bool:
-        self.t2 = t2
-        t2.t1 = self
-
-        return True
+    def get(self: Thing, key: str) -> Thing:
+        return self.relationships.get(key)
     
-    def add_t3(self: Thing, t3: Thing) -> bool:
-        self.t3 = t3
-        t3.t1 = self
+    def set(self: Thing, key: str, val: Thing) -> None:
+        self.relationships[key] = val
 
-        t3.t2 = self.t2
-        self.t2.t3 = self.t3
+    def relate(self: Thing, other: Thing) -> bool:
 
-        return True
-    
-    def add_t4(self: Thing, t4: Thing) -> bool:
-        self.t4 = t4
-        t4.t1 = self
-
-        self.t2.t4 = t4
-        t4.t2 = self.t2
-
-        self.t3.t4 = t4
-        t4.t3 = self.t3
-
+        # lol
+        for (t1, t2) in ((self, other), (other, self)):
+            for key in t1.relationships:
+                if t2.get(key):
+                    return False
+                else:
+                    t2.set(key, t1.get(key))
+        
         return True
 
     @staticmethod
     def is_pair(a: Thing, b: Thing) -> bool:
-        return any((
-            any(((t is b) and (t is not None)) for t in a.things()),
-            any(((t is a) and (t is not None)) for t in b.things())
-        ))
-    
-    @staticmethod
-    def is_diff(a: Thing, b: Thing) -> bool:
-        return not Thing.is_pair(a, b)
+        return (b.get(a.kind) is a) and (a.get(b.kind) is a)
 
     @staticmethod
-    def same(a: Thing, b: Thing) -> bool:
-        return a == b
+    def is_same(a: Thing, b: Thing) -> bool:
+        return a is b
