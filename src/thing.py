@@ -35,15 +35,20 @@ class Thing:
 
     def relate(self: Thing, other: Thing) -> bool:
 
-        # lol
-        for (t1, t2) in ((self, other), (other, self)):
+        def _pollinate(t1: Thing, t2: Thing) -> None:
             for key in t1.relationships:
-                if t2.get(key):
-                    return False
+                g1 = t1.get(key)
+                g2 = t2.get(key)
+                if g2 and (g2 is not g1):
+                    raise Exception('Conflicting key already exists')
+                    # return False
                 else:
-                    t2.set(key, t1.get(key))
+                    t2.set(key, g1)
         
-        return True
+        success1 = _pollinate(self, other)
+        success2 = _pollinate(other, self)
+        
+        return success1 and success2
 
     @staticmethod
     def is_pair(a: Thing, b: Thing) -> bool:
