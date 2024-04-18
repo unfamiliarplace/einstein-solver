@@ -31,53 +31,58 @@ class Clue:
 
 class Game:
     keys: dict[str, Thing]
-    kinds: list[str]
-    t1s: set[Thing]
-    t2s: set[Thing]
-    t3s: set[Thing]
-    t4s: set[Thing]
-    sets = list[set[Thing]]
+    sets: dict[str, set[Thing]]
     clues: list[function]
 
     def __init__(self: Game) -> None:
         self.keys = dict()
-        self.kinds = list()
-        self.t1s = set()
-        self.t2s = set()
-        self.t3s = set()
-        self.t4s = set()
-        self.sets = [self.t1s, self.t2s, self.t3s, self.t4s]
+        self.sets = dict()
         self.clues = list()
 
     def things(self: Game) -> set[Thing]:
-        return self.t1s.union(self.t2s).union(self.t3s).union(self.t4s)
+        return set(self.keys.values())
+    
+    def reset_relationships(self: Game) -> None:
+        for t in self.things():
+            t.reset_relationships()
+
+    def validate_all_clues(self: Game) -> bool:
+        for clue in self.clues:
+            if not clue():
+                # print(clue.__name__)
+                return False
+        
+        return True
 
     def __repr__(self: Game) -> str:
         s = ''
-        n = len(max(self.kinds, key=len))
-        for i in range(len(self.sets)):
-            s += f'{self.kinds[i]:{n}} {self.sets[i]}\n'
+        n = len(max(self.sets, key=len))
+        for (kind, things) in self.sets.items():
+            s += f'{kind:{n}} {things}\n'
         
         return s
     
-def parse_game(path: Path) -> Game:
-    g = Game()
+    @staticmethod
+    def parse_json(path: Path) -> Game:
+        g = Game()
 
-    with open(path, 'r') as f:
-        data = json.loads(f.read())
-    
-    for (i, group) in enumerate(data['kinds']):
-        name, things = group['name'], group['things']
-        g.kinds.append(name)
-        for thing in things:
-            t = Thing(thing, name)
-            g.sets[i].add(t)
-            g.keys[thing] = t
+        with open(path, 'r') as f:
+            data = json.loads(f.read())
+        
+        for group in data['kinds']:
+            name, things = group['name'], group['things']
+            s = set()
+            for thing in things:
+                t = Thing(thing, name)
+                s.add(t)
+                g.keys[thing] = t
+            g.sets[name] = things
 
-    for (i, group) in enumerate(data['clues']):
-        pass
-    
-    return g
-    
-g = parse_game(Path('src/games/restaurant.json'))
-print(g)
+        for (i, group) in enumerate(data['clues']):
+            pass
+        
+        return g
+
+if __name__ == '__main__':
+    g = parse_game(Path('src/games/restaurant.json'))
+    print(g)

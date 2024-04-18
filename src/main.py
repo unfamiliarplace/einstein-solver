@@ -1,15 +1,10 @@
 from __future__ import annotations
 import itertools
+from pathlib import Path
 from thing import Thing
-import game
+from game import Game
 
-def validate_all_clues() -> bool:
-    for clue in game.clues:
-        if not clue():
-            # print(clue.__name__)
-            return False
-    
-    return True
+
 
 def get_expanded_worlds(worlds: list[list[Thing]], items: set[Thing]):
     for world in worlds:
@@ -20,38 +15,36 @@ def get_expanded_worlds(worlds: list[list[Thing]], items: set[Thing]):
                 expanded.append(item)
             yield expanded
 
-def get_all_worlds() -> list[list[Thing]]:
-    worlds = [[[p] for p in game.t1s]]
-    worlds = list(w for w in get_expanded_worlds(worlds, game.t2s))
-    worlds = list(w for w in get_expanded_worlds(worlds, game.t3s))
-    worlds = list(w for w in get_expanded_worlds(worlds, game.t4s))
+def get_all_worlds(g: Game) -> list[list[Thing]]:
+    first, *groups = list(g.sets.values())
+    worlds = [[[t] for t in first]]
+
+    for group in groups:
+        worlds = list(w for w in get_expanded_worlds(worlds, group))
+
     return worlds
 
 def realize_world(world: list[list[Thing]]) -> None:
     for group in world:
-        t1, t2, t3, t4 = group
-        t1.add_t2(t2)
-        t1.add_t3(t3)
-        t1.add_t4(t4)
+        first, *rest = group
+        for t in rest:
+            first.relate(t)
 
-def reset_world() -> None:
-    for t in game.things:
-        t.reset()
-
-def test_all() -> int:
-    reset_world()
+def test_all(g: Game) -> int:
+    g.reset_relationships()
 
     good = 0
-    for world in get_all_worlds():
+    for world in get_all_worlds(g):
         realize_world(world)
 
-        if validate_all_clues():
+        if g.validate_all_clues():
             good += 1
         
-        reset_world()
+        g.reset_relationships()
         
     return good
                     
 if __name__ == '__main__':
-    n = test_all()
+    g = Game.parse_json(Path('src/games/restaurant.json'))
+    n = test_all(g)
     print(f'Found {n} solution(s). Debug to investigate')

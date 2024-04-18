@@ -22,7 +22,7 @@ class Thing:
     def relations(self: Thing) -> set[Thing]:
         return set(self.relationships.values())
     
-    def reset(self: Thing) -> None:
+    def reset_relationships(self: Thing) -> None:
         self.relationships = {
             self.kind: self
         }
