@@ -128,7 +128,7 @@ class Clue:
     def validate(self: Clue, g: Game) -> bool:
         for r in self.rules:
             if not r.evaluate(g):
-                print(str(r)[:20])
+                print('RULE FAILED:', str(r)[:20])
                 return False
         
         return True
