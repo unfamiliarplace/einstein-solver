@@ -33,22 +33,41 @@ class Thing:
     def set(self: Thing, key: str, val: Thing) -> None:
         self.relationships[key] = val
 
-    def relate(self: Thing, other: Thing) -> bool:
+    @staticmethod
+    def populate_relationships(d1: dict[str, Thing], d2: dict[str, Thing]) -> dict[str, Thing]:
+        for (k, v) in d1.items():
+            if d2.get(k) not in (None, v):
+                raise Exception('Conflicting key already exists')
+            else:
+                d2[k] = v
 
-        def _pollinate(t1: Thing, t2: Thing) -> None:
-            for key in t1.relationships:
-                g1 = t1.get(key)
-                g2 = t2.get(key)
-                if g2 and (g2 is not g1):
-                    raise Exception('Conflicting key already exists')
-                    # return False
-                else:
-                    t2.set(key, g1)
+    @staticmethod
+    def merge_relationships(d1: dict[str, Thing], d2: dict[str, Thing]) -> dict[str, Thing]:
+        d3 = {}
+        Thing.populate_relationships(d1, d3)
+        Thing.populate_relationships(d2, d3)
+        return d3
+
+    def relate(self: Thing, other: Thing) -> bool:
+        things = set()
+        relationships = {}
+
+        def _compile(t: Thing) -> None:
+            for (k, t2) in t.relationships.items():
+                if t2 not in things:
+                    if relationships.get(k) not in (None, t2):
+                        raise Exception('Conflicting key already exists')
+                    else:
+                        things.add(t2)
+                        relationships[k] = t2
+                        _compile(t2)
         
-        success1 = _pollinate(self, other)
-        success2 = _pollinate(other, self)
-        
-        return success1 and success2
+        _compile(self)
+        _compile(other)
+
+        for t in things:
+            for (k, t2) in relationships.items():
+                t.relationships[k] = t2        
 
     @staticmethod
     def is_pair(a: Thing, b: Thing) -> bool:

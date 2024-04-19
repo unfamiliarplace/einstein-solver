@@ -23,11 +23,13 @@ class Symbol:
         return hash(self.name)
 
 class Rule:
+    json: dict[str, object]
     func: function
     symbols: set[Symbol]
     subrules: list[Rule]
 
     def __init__(self: Rule, json: dict[str, object]) -> None:
+        self.json = json
         self.func, self.symbols, self.subrules = None, set(), list()
 
         f, args = json['func'], json['args']
@@ -66,6 +68,13 @@ class Rule:
     
     def resolve_symbols(self: Rule, g: Game) -> set[Thing]:
         return set(s.resolve(g) for s in self.symbols)
+    
+    def __repr__(self: Rule) -> str:
+        return repr(self.json)
+        # if self.symbols:
+        #     return f'{self.func}({",".join((str(s) for s in self.symbols))})'
+        # else:
+        #     return f'{self.func}({",".join((str(r) for r in self.subrules))})'
 
 class Clue:
     rules: list[Rule]
@@ -74,7 +83,15 @@ class Clue:
         self.rules = []
 
     def validate(self: Clue, g: Game) -> bool:
-        return all(r.evaluate(g) for r in self.rules)
+        for r in self.rules:
+            if not r.evaluate(g):
+                print(r)
+                return False
+        else:
+            return True
+    
+    def __repr__(self: Clue) -> str:
+        return '\n'.join((str(r) for r in self.rules))
 
 class Game:
     keys: dict[str, Thing]
@@ -96,7 +113,7 @@ class Game:
     def validate_all_clues(self: Game) -> bool:
         for clue in self.clues:
             if not clue.validate(self):
-                # print(clue.__name__)
+                # print(clue)
                 return False
         
         return True
