@@ -34,6 +34,20 @@ class Rule:
 
         f, args = json['func'], json['args']
 
+        def _and(g: Game) -> bool:
+            for r in self.subrules:
+                print(r)
+                print(r.evaluate(g))
+                print()
+                return sum(r.evaluate(g) for r in self.subrules) == len(self.subrules)
+
+        def _xor(g: Game) -> bool:
+            for r in self.subrules:
+                print(r)
+                print(r.evaluate(g))
+                print()
+                return sum(r.evaluate(g) for r in self.subrules) == 1
+
         match f:
             case 'pair':
                 self.func = lambda g: Thing.is_pair(*self.resolve_symbols(g))
@@ -47,9 +61,11 @@ class Rule:
             case 'or':
                 self.func = lambda g: any(r.evaluate(g) for r in self.subrules)
             case 'and':
-                self.func = lambda g: all(r.evaluate(g) for r in self.subrules)
+                self.func = _and
+                # self.func = lambda g: all(r.evaluate(g) for r in self.subrules)
             case 'xor':
-                self.func = lambda g: sum(r.evaluate(g) for r in self.subrules) == 1
+                self.func = _xor
+                # self.func = lambda g: sum(r.evaluate(g) for r in self.subrules) == 1
             case 'nand':
                 self.func = lambda g: sum(r.evaluate(g) for r in self.subrules) < len(self.subrules)
             case 'nor':
@@ -85,7 +101,7 @@ class Clue:
     def validate(self: Clue, g: Game) -> bool:
         for r in self.rules:
             if not r.evaluate(g):
-                print(r)
+                # print(r)
                 return False
         else:
             return True
