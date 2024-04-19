@@ -10,7 +10,14 @@ class Symbol:
         self.name = name
 
     def resolve(self: Symbol, g: Game) -> Thing:
-        pass
+        if '::' not in self.name:
+            return g.keys[self.name]
+        
+        else:
+            # TODO Can only do a depth of 1
+            key, relationship = self.name.split('::')
+            t = g.keys[key]
+            return t.relationships[relationship]
 
     def __hash__(self: Symbol) -> int:
         return hash(self.name)
@@ -18,10 +25,47 @@ class Symbol:
 class Rule:
     func: function
     symbols: set[Symbol]
+    subrules: list[Rule]
 
-    def __init__(self: Rule) -> None:
-        self.func = None
-        self.symbols = set()
+    def __init__(self: Rule, json: dict[str, object]) -> None:
+        self.func, self.symbols, self.subrules = None, set(), list()
+
+        f, args = json['func'], json['args']
+
+        match f:
+            case 'pair':
+                self.func = lambda g: Thing.is_pair(*self.resolve_symbols(g))
+            case '-pair':
+                self.func = lambda g: not Thing.is_pair(*self.resolve_symbols(g))
+            case 'same':
+                self.func = lambda g: Thing.is_same(*self.resolve_symbols(g))
+            case '-same':
+                self.func = lambda g: not Thing.is_same(*self.resolve_symbols(g))
+
+            case 'or':
+                self.func = lambda g: any(r.evaluate(g) for r in self.subrules)
+            case 'and':
+                self.func = lambda g: all(r.evaluate(g) for r in self.subrules)
+            case 'xor':
+                self.func = lambda g: sum(r.evaluate(g) for r in self.subrules) == 1
+            case 'nand':
+                self.func = lambda g: sum(r.evaluate(g) for r in self.subrules) < len(self.subrules)
+            case 'nor':
+                self.func = lambda g: not any(r.evaluate(g) for r in self.subrules)
+        
+        base = f in {'pair', '-pair', 'same', '-same'}
+
+        if base:
+            self.symbols = set(Symbol(arg) for arg in args)
+
+        else:
+            self.subrules = list(Rule(arg) for arg in args)
+    
+    def evaluate(self: Rule, g: Game) -> bool:
+        return self.func(g)
+    
+    def resolve_symbols(self: Rule, g: Game) -> set[Thing]:
+        return set(s.resolve(g) for s in self.symbols)
 
 class Clue:
     rules: list[Rule]
@@ -29,10 +73,13 @@ class Clue:
     def __init__(self: Clue) -> None:
         self.rules = []
 
+    def validate(self: Clue, g: Game) -> bool:
+        return all(r.evaluate(g) for r in self.rules)
+
 class Game:
     keys: dict[str, Thing]
     sets: dict[str, set[Thing]]
-    clues: list[function]
+    clues: list[Clue]
 
     def __init__(self: Game) -> None:
         self.keys = dict()
@@ -48,7 +95,7 @@ class Game:
 
     def validate_all_clues(self: Game) -> bool:
         for clue in self.clues:
-            if not clue():
+            if not clue.validate(self):
                 # print(clue.__name__)
                 return False
         
@@ -76,13 +123,17 @@ class Game:
                 t = Thing(thing, name)
                 s.add(t)
                 g.keys[thing] = t
-            g.sets[name] = things
+            g.sets[name] = s
 
-        for (i, group) in enumerate(data['clues']):
-            pass
+        for clue in data['clues']:
+            c = Clue()
+            for json_rule in clue:
+                r = Rule(json_rule)
+                c.rules.append(r)
+            g.clues.append(c)
         
         return g
 
 if __name__ == '__main__':
-    g = parse_game(Path('src/games/restaurant.json'))
-    print(g)
+    g = Game.parse_json(Path('src/games/restaurant.json'))
+    # print(g)

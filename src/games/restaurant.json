@@ -40,31 +40,31 @@
     "clues": [
         [
             {
-                "func": "diff",
+                "func": "-pair",
                 "args": ["Leon", "Yvette"]
             },
             {
-                "func": "diff",
+                "func": "-pair",
                 "args": ["Yvette", "14.99"]
             }
         ],
         [
             {
-                "func": "diff",
-                "args": ["Irene", "16.99"]
+                "func": "-pair",
+                "args": ["Irene's", "16.99"]
             },
             {
-                "func": "diff",
+                "func": "-pair",
                 "args": ["Lyon's", "16.99"]
             }
         ],
         [
             {
-                "func": "diff",
+                "func": "-pair",
                 "args": ["Lyon's", "17.99"]
             },
             {
-                "func": "diff",
+                "func": "-pair",
                 "args": ["Leon", "Pork"]
             },
             {
@@ -110,11 +110,11 @@
                         "args": [
                             {
                                 "func": "same",
-                                "args": ["Charlie's->Cost", "14.99"]
+                                "args": ["Charlie's::Cost", "14.99"]
                             },
                             {
                                 "func": "same",
-                                "args": ["Chicken's->Cost", "15.99"]
+                                "args": ["Chicken's::Cost", "15.99"]
                             }
                         ]
                     },
@@ -123,11 +123,11 @@
                         "args": [
                             {
                                 "func": "same",
-                                "args": ["Charlie's->Cost", "15.99"]
+                                "args": ["Charlie's::Cost", "15.99"]
                             },
                             {
                                 "func": "same",
-                                "args": ["Chicken's->Cost", "16.99"]
+                                "args": ["Chicken's::Cost", "16.99"]
                             }
                         ]
                     },
@@ -136,11 +136,11 @@
                         "args": [
                             {
                                 "func": "same",
-                                "args": ["Charlie's->Cost", "16.99"]
+                                "args": ["Charlie's::Cost", "16.99"]
                             },
                             {
                                 "func": "same",
-                                "args": ["Chicken's->Cost", "17.99"]
+                                "args": ["Chicken's::Cost", "17.99"]
                             }
                         ]
                     }
@@ -149,7 +149,7 @@
         ],
         [
             {
-                "func": "diff",
+                "func": "-pair",
                 "args": ["Yvette", "Irene's"]
             },
             {

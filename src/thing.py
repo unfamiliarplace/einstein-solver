@@ -8,7 +8,7 @@ class Thing:
     def __init__(self: Thing, id: str, kind: str) -> None:
         self.id = id
         self.kind = kind
-        self.reset()
+        self.reset_relationships()
 
     def __hash__(self: Thing) -> int:
         return hash(str(self))
