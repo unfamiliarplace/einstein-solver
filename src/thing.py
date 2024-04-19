@@ -72,7 +72,3 @@ class Thing:
     @staticmethod
     def is_pair(a: Thing, b: Thing) -> bool:
         return (b.get(a.kind) is a) and (a.get(b.kind) is a)
-
-    @staticmethod
-    def is_same(a: Thing, b: Thing) -> bool:
-        return a is b

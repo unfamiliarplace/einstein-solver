@@ -21,6 +21,9 @@ class Symbol:
 
     def __hash__(self: Symbol) -> int:
         return hash(self.name)
+    
+    def __repr__(self: Symbol) -> str:
+        return self.name
 
 class Rule:
     json: dict[str, object]
@@ -34,19 +37,38 @@ class Rule:
 
         f, args = json['func'], json['args']
 
+        def _or(g: Game) -> bool:
+            # print('OR')
+            # for r in self.subrules:
+            #     pass
+            #     print(r.evaluate(g), r)
+            #     print()
+            # print('OR Result: ', any(r.evaluate(g) for r in self.subrules))
+            # print('END OR\n')
+            if any(r.evaluate(g) for r in self.subrules):
+                print('a positive or was found')
+            return any(r.evaluate(g) for r in self.subrules)
+
         def _and(g: Game) -> bool:
-            for r in self.subrules:
-                print(r)
-                print(r.evaluate(g))
-                print()
-                return sum(r.evaluate(g) for r in self.subrules) == len(self.subrules)
+            # print('AND')
+            # for r in self.subrules:
+            #     pass
+            #     print(r.evaluate(g), r)
+            #     print()
+            # print('AND Result: ', sum(r.evaluate(g) for r in self.subrules) == len(self.subrules))
+            # print('END AND')
+            return sum(r.evaluate(g) for r in self.subrules) == len(self.subrules)
+            
 
         def _xor(g: Game) -> bool:
+            print('XOR')
             for r in self.subrules:
-                print(r)
-                print(r.evaluate(g))
-                print()
-                return sum(r.evaluate(g) for r in self.subrules) == 1
+                pass
+                # print(r.evaluate(g), r)
+                # print()
+            print('XOR Result: ', sum(r.evaluate(g) for r in self.subrules) == 1)
+            print('END XOR')
+            return sum(r.evaluate(g) for r in self.subrules) == 1
 
         match f:
             case 'pair':
@@ -54,12 +76,13 @@ class Rule:
             case '-pair':
                 self.func = lambda g: not Thing.is_pair(*self.resolve_symbols(g))
             case 'same':
-                self.func = lambda g: Thing.is_same(*self.resolve_symbols(g))
+                self.func = lambda g: len(self.resolve_symbols(g)) == 1
             case '-same':
-                self.func = lambda g: not Thing.is_same(*self.resolve_symbols(g))
+                self.func = lambda g: len(self.resolve_symbols(g)) > 1
 
             case 'or':
-                self.func = lambda g: any(r.evaluate(g) for r in self.subrules)
+                self.func = _or
+                # self.func = lambda g: any(r.evaluate(g) for r in self.subrules)
             case 'and':
                 self.func = _and
                 # self.func = lambda g: all(r.evaluate(g) for r in self.subrules)
@@ -80,17 +103,21 @@ class Rule:
             self.subrules = list(Rule(arg) for arg in args)
     
     def evaluate(self: Rule, g: Game) -> bool:
+        if self.json['func'] == 'or':
+            print('checking an or')
+            if self.func(g):
+                print('or was good')
         return self.func(g)
     
     def resolve_symbols(self: Rule, g: Game) -> set[Thing]:
         return set(s.resolve(g) for s in self.symbols)
     
     def __repr__(self: Rule) -> str:
-        return repr(self.json)
-        # if self.symbols:
-        #     return f'{self.func}({",".join((str(s) for s in self.symbols))})'
-        # else:
-        #     return f'{self.func}({",".join((str(r) for r in self.subrules))})'
+        # return repr(self.json)
+        if self.symbols:
+            return f'{self.json["func"]}({",".join((str(s) for s in self.symbols))})'
+        else:
+            return f'{self.json["func"]}({",".join((str(r) for r in self.subrules))})'
 
 class Clue:
     rules: list[Rule]
@@ -101,10 +128,10 @@ class Clue:
     def validate(self: Clue, g: Game) -> bool:
         for r in self.rules:
             if not r.evaluate(g):
-                # print(r)
+                print(str(r)[:20])
                 return False
-        else:
-            return True
+        
+        return True
     
     def __repr__(self: Clue) -> str:
         return '\n'.join((str(r) for r in self.rules))

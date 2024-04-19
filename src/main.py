@@ -4,8 +4,6 @@ from pathlib import Path
 from thing import Thing
 from game import Game
 
-
-
 def get_expanded_worlds(worlds: list[list[Thing]], items: set[Thing]):
     for world in worlds:
         for perm in itertools.permutations(items):        
@@ -43,7 +41,7 @@ def test_all(g: Game) -> int:
         g.reset_relationships()
         
     return good
-                    
+
 if __name__ == '__main__':
     g = Game.parse_json(Path('src/games/restaurant.json'))
     n = test_all(g)
