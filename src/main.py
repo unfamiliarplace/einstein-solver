@@ -16,11 +16,9 @@ def get_expanded_worlds(worlds: list[list[Thing]], items: set[Thing]):
 def get_all_worlds(g: Game) -> list[list[Thing]]:
     first, *groups = list(g.sets.values())
     worlds = [[[t] for t in first]]
-    print(len(worlds))
 
     for group in groups:
         worlds = list(w for w in get_expanded_worlds(worlds, group))
-        print(len(worlds))
 
     return worlds
 
@@ -36,9 +34,6 @@ def test_all(g: Game) -> int:
     good = 0
     for world in get_all_worlds(g):
         realize_world(world)
-
-        if g.keys['Isac'].get('Food') == g.keys['Chicken']:
-            print('hey')
 
         if g.validate_all_clues():
             good += 1

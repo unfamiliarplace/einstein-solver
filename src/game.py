@@ -37,44 +37,6 @@ class Rule:
 
         f, args = json['func'], json['args']
 
-        def _or(g: Game) -> bool:
-            # print('OR')
-            # for r in self.subrules:
-            #     pass
-            #     print(r.evaluate(g), r)
-            #     print()
-            # print('OR Result:', any(r.evaluate(g) for r in self.subrules))
-            # print('END OR\n')
-            if any(r.evaluate(g) for r in self.subrules):
-                pass
-                # print('a positive or was found')
-            return any(r.evaluate(g) for r in self.subrules)
-
-        def _and(g: Game) -> bool:
-            # print('AND')
-            # for r in self.subrules:
-            #     pass
-            #     print(r.evaluate(g), r)
-            #     print()
-            # print('AND Result:', sum(r.evaluate(g) for r in self.subrules) == len(self.subrules))
-            # print('END AND')
-            return sum(r.evaluate(g) for r in self.subrules) == len(self.subrules)
-            
-
-        def _xor(g: Game) -> bool:
-            # print('XOR')
-            for r in self.subrules:
-                pass
-                # print(r.evaluate(g), r)
-                # print()
-            # print('XOR Count:', sum(r.evaluate(g) for r in self.subrules), '/', len(self.subrules))
-            if sum(r.evaluate(g) for r in self.subrules) > 0:
-                print('heyy')
-                # raise Exception('more than 0')
-            # print('XOR Result:', sum(r.evaluate(g) for r in self.subrules) == 1)
-            # print('END XOR')
-            return sum(r.evaluate(g) for r in self.subrules) == 1
-
         match f:
             case 'pair':
                 self.func = lambda g: Thing.is_pair(*self.resolve_symbols(g))
@@ -86,14 +48,11 @@ class Rule:
                 self.func = lambda g: len(self.resolve_symbols(g)) > 1
 
             case 'or':
-                self.func = _or
-                # self.func = lambda g: any(r.evaluate(g) for r in self.subrules)
+                self.func = lambda g: any(r.evaluate(g) for r in self.subrules)
             case 'and':
-                self.func = _and
-                # self.func = lambda g: all(r.evaluate(g) for r in self.subrules)
+                self.func = lambda g: all(r.evaluate(g) for r in self.subrules)
             case 'xor':
-                self.func = _xor
-                # self.func = lambda g: sum(r.evaluate(g) for r in self.subrules) == 1
+                self.func = lambda g: sum(r.evaluate(g) for r in self.subrules) == 1
             case 'nand':
                 self.func = lambda g: sum(r.evaluate(g) for r in self.subrules) < len(self.subrules)
             case 'nor':
@@ -108,18 +67,12 @@ class Rule:
             self.subrules = list(Rule(arg) for arg in args)
     
     def evaluate(self: Rule, g: Game) -> bool:
-        if self.json['func'] == 'or':
-            # print('checking an or')
-            if self.func(g):
-                pass
-                # print('or was good')
         return self.func(g)
     
     def resolve_symbols(self: Rule, g: Game) -> set[Thing]:
         return set(s.resolve(g) for s in self.symbols)
     
     def __repr__(self: Rule) -> str:
-        # return repr(self.json)
         if self.symbols:
             return f'{self.json["func"]}({",".join((str(s) for s in self.symbols))})'
         else:
@@ -135,12 +88,8 @@ class Clue:
         for r in self.rules:
             if not r.evaluate(g):
                 # print('RULE FAILED:', str(r)[:40])
-                # print('the clue was bad')
-                # print()
                 return False
         
-        # print('the clue was good')
-        # print()
         return True
     
     def __repr__(self: Clue) -> str:
@@ -166,7 +115,7 @@ class Game:
     def validate_all_clues(self: Game) -> bool:
         for clue in self.clues:
             if not clue.validate(self):
-                # print(clue)
+                # print('CLUE FAILED:', clue)
                 return False
         
         return True
@@ -206,4 +155,4 @@ class Game:
 
 if __name__ == '__main__':
     g = Game.parse_json(Path('src/games/restaurant.json'))
-    # print(g)
+    print(g)
