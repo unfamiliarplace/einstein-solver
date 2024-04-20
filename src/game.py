@@ -134,7 +134,7 @@ class Clue:
     def validate(self: Clue, g: Game) -> bool:
         for r in self.rules:
             if not r.evaluate(g):
-                # print('RULE FAILED:', str(r)[:40])
+                print('RULE FAILED:', str(r)[:40])
                 # print('the clue was bad')
                 # print()
                 return False
