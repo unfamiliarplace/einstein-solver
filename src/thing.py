@@ -67,7 +67,7 @@ class Thing:
 
         for t in things:
             for (k, t2) in relationships.items():
-                t.relationships[k] = t2        
+                t.set(k, t2)
 
     @staticmethod
     def is_pair(a: Thing, b: Thing) -> bool:

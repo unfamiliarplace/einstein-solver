@@ -60,6 +60,49 @@
         ],
         [
             {
+                "func": "-pair",
+                "args": ["Lyon's", "17.99"]
+            },
+            {
+                "func": "-pair",
+                "args": ["Leon", "Pork"]
+            },
+            {
+                "func": "xor",
+                "args": [
+                    {
+                        "func": "and",
+                        "args": [
+                            {
+                                "func": "pair",
+                                "args": ["Leon", "17.99"]
+                            },
+                            {
+                                "func": "pair",
+                                "args": ["Pork", "Lyon's"
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "func": "and",
+                        "args": [
+                            {
+                                "func": "pair",
+                                "args": ["Leon", "Lyon's"]
+                            },
+                            {
+                                "func": "pair",
+                                "args": ["Pork", "17.99"]
+                            }
+                        ]
+                    }
+                ]
+
+            }
+        ],
+        [
+            {
                 "func": "or",
                 "args": [
                     {

@@ -43,10 +43,11 @@ class Rule:
             #     pass
             #     print(r.evaluate(g), r)
             #     print()
-            # print('OR Result: ', any(r.evaluate(g) for r in self.subrules))
+            # print('OR Result:', any(r.evaluate(g) for r in self.subrules))
             # print('END OR\n')
             if any(r.evaluate(g) for r in self.subrules):
-                print('a positive or was found')
+                pass
+                # print('a positive or was found')
             return any(r.evaluate(g) for r in self.subrules)
 
         def _and(g: Game) -> bool:
@@ -55,19 +56,23 @@ class Rule:
             #     pass
             #     print(r.evaluate(g), r)
             #     print()
-            # print('AND Result: ', sum(r.evaluate(g) for r in self.subrules) == len(self.subrules))
+            # print('AND Result:', sum(r.evaluate(g) for r in self.subrules) == len(self.subrules))
             # print('END AND')
             return sum(r.evaluate(g) for r in self.subrules) == len(self.subrules)
             
 
         def _xor(g: Game) -> bool:
-            print('XOR')
+            # print('XOR')
             for r in self.subrules:
                 pass
                 # print(r.evaluate(g), r)
                 # print()
-            print('XOR Result: ', sum(r.evaluate(g) for r in self.subrules) == 1)
-            print('END XOR')
+            # print('XOR Count:', sum(r.evaluate(g) for r in self.subrules), '/', len(self.subrules))
+            if sum(r.evaluate(g) for r in self.subrules) > 0:
+                print('heyy')
+                raise Exception('more than 0')
+            # print('XOR Result:', sum(r.evaluate(g) for r in self.subrules) == 1)
+            # print('END XOR')
             return sum(r.evaluate(g) for r in self.subrules) == 1
 
         match f:
@@ -94,9 +99,9 @@ class Rule:
             case 'nor':
                 self.func = lambda g: not any(r.evaluate(g) for r in self.subrules)
         
-        base = f in {'pair', '-pair', 'same', '-same'}
+        basic = f in {'pair', '-pair', 'same', '-same'}
 
-        if base:
+        if basic:
             self.symbols = set(Symbol(arg) for arg in args)
 
         else:
@@ -104,9 +109,10 @@ class Rule:
     
     def evaluate(self: Rule, g: Game) -> bool:
         if self.json['func'] == 'or':
-            print('checking an or')
+            # print('checking an or')
             if self.func(g):
-                print('or was good')
+                pass
+                # print('or was good')
         return self.func(g)
     
     def resolve_symbols(self: Rule, g: Game) -> set[Thing]:
@@ -128,9 +134,13 @@ class Clue:
     def validate(self: Clue, g: Game) -> bool:
         for r in self.rules:
             if not r.evaluate(g):
-                print('RULE FAILED:', str(r)[:40])
+                # print('RULE FAILED:', str(r)[:40])
+                # print('the clue was bad')
+                # print()
                 return False
         
+        # print('the clue was good')
+        # print()
         return True
     
     def __repr__(self: Clue) -> str:
