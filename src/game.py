@@ -70,7 +70,7 @@ class Rule:
             # print('XOR Count:', sum(r.evaluate(g) for r in self.subrules), '/', len(self.subrules))
             if sum(r.evaluate(g) for r in self.subrules) > 0:
                 print('heyy')
-                raise Exception('more than 0')
+                # raise Exception('more than 0')
             # print('XOR Result:', sum(r.evaluate(g) for r in self.subrules) == 1)
             # print('END XOR')
             return sum(r.evaluate(g) for r in self.subrules) == 1
@@ -134,7 +134,7 @@ class Clue:
     def validate(self: Clue, g: Game) -> bool:
         for r in self.rules:
             if not r.evaluate(g):
-                print('RULE FAILED:', str(r)[:40])
+                # print('RULE FAILED:', str(r)[:40])
                 # print('the clue was bad')
                 # print()
                 return False
