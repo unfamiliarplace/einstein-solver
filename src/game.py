@@ -39,9 +39,9 @@ class Rule:
 
         match f:
             case 'pair':
-                self.func = lambda g: Thing.is_pair(*self.resolve_symbols(g))
+                self.func = lambda g: Thing.are_related(self.resolve_symbols(g))
             case '-pair':
-                self.func = lambda g: not Thing.is_pair(*self.resolve_symbols(g))
+                self.func = lambda g: not Thing.are_related(self.resolve_symbols(g))
             case 'same':
                 self.func = lambda g: len(self.resolve_symbols(g)) == 1
             case '-same':

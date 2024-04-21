@@ -70,5 +70,9 @@ class Thing:
                 t.set(k, t2)
 
     @staticmethod
-    def is_pair(a: Thing, b: Thing) -> bool:
-        return (b.get(a.kind) is a) and (a.get(b.kind) is b)
+    def are_related(ts: set[Thing]) -> bool:
+        for t1 in ts:
+            for t2 in ts:
+                if t2.get(t1.kind) is not t1:
+                    return False
+        return True
