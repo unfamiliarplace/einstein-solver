@@ -28,7 +28,19 @@ def realize_world(world: list[list[Thing]]) -> None:
         for t in rest:
             first.relate(t)
 
-def test_all(g: Game) -> int:
+def pick_path(L: list[Path]) -> Path:
+    choices = sorted(L)
+    choice_str = ''
+    for (i, path) in enumerate(choices):
+        choice_str += f'{i + 1:>2}: {path.stem}\n'
+        
+    print(f'Games found:\n\n{choice_str}')
+    number = int(input('Selection (enter number): '))
+    return choices[number - 1]
+
+def find_solutions(g: Game) -> list[list[Thing]]:
+    solutions = []
+
     g.reset_relationships()
 
     good = 0
@@ -36,17 +48,34 @@ def test_all(g: Game) -> int:
         realize_world(world)
 
         if g.validate_all_clues():
-            good += 1
+            solutions.append(world)
         
         g.reset_relationships()
         
-    return good
+    return solutions
+
+def print_solution(sol: list[list[Thing]]) -> None:
+    print(sol)
+
+def run() -> None:
+    paths = Path('src/games/').glob('*.json')
+    path = pick_path(paths)
+
+    g = Game.parse_json(path)
+    solutions = find_solutions(g)
+    print(f'Found {len(solutions)} solution(s).')
+
+    i = 0
+    choice = input('Hit Enter to view the first one or Q to quit: ').strip().upper()
+    while (choice != 'Q') and (i < len(solutions)):
+        print_solution(solutions[i])
+        i += 1
+        choice = input('Hit Enter to view next or Q to quit: ').strip().upper()
+
+    print('Finished')
 
 if __name__ == '__main__':
-    g = Game.parse_json(Path('src/games/restaurant.json'))
-    n = test_all(g)
-    print(f'Found {n} solution(s). Debug to investigate')
+    run()
 
 # TODO Table output
-# TODO File input
 # TODO New game :)
