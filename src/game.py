@@ -38,10 +38,10 @@ class Rule:
         f, args = json['func'], json['args']
 
         match f:
-            case 'pair':
-                self.func = lambda g: Thing.are_related(self.resolve_symbols(g))
-            case '-pair':
-                self.func = lambda g: not Thing.are_related(self.resolve_symbols(g))
+            case 'link':
+                self.func = lambda g: Thing.are_linked(self.resolve_symbols(g))
+            case '-link':
+                self.func = lambda g: not Thing.are_linked(self.resolve_symbols(g))
             case 'same':
                 self.func = lambda g: len(self.resolve_symbols(g)) == 1
             case '-same':
@@ -58,7 +58,7 @@ class Rule:
             case 'nor':
                 self.func = lambda g: not any(r.evaluate(g) for r in self.subrules)
         
-        basic = f in {'pair', '-pair', 'same', '-same'}
+        basic = f in {'link', '-link', 'same', '-same'}
 
         if basic:
             self.symbols = set(Symbol(arg) for arg in args)
