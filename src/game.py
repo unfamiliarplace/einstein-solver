@@ -14,7 +14,6 @@ class Symbol:
             return g.keys[self.name]
         
         else:
-            # TODO Can only do a depth of 1
             key, relationship = self.name.split('::')
             t = g.keys[key]
             return t.relationships[relationship]
@@ -157,7 +156,3 @@ class Game:
             g.clues.append(c)
         
         return g
-
-if __name__ == '__main__':
-    g = Game.parse_json(Path('src/games/restaurant.json'))
-    print(g)
