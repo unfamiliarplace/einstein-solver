@@ -28,12 +28,12 @@ class Symbol:
 class Rule:
     json: dict[str, object]
     func: function
-    symbols: set[Symbol]
+    symbols: list[Symbol]
     subrules: list[Rule]
 
     def __init__(self: Rule, json: dict[str, object]) -> None:
         self.json = json
-        self.func, self.symbols, self.subrules = None, set(), list()
+        self.func, self.symbols, self.subrules = None, list(), list()
 
         f, args = json['func'], json['args']
 
@@ -43,9 +43,14 @@ class Rule:
             case '-link':
                 self.func = lambda g: not Thing.are_linked(self.resolve_symbols(g))
             case 'same':
-                self.func = lambda g: len(self.resolve_symbols(g)) == 1
+                self.func = lambda g: len(set(self.resolve_symbols(g))) == 1
             case '-same':
-                self.func = lambda g: len(self.resolve_symbols(g)) > 1
+                self.func = lambda g: len(set(self.resolve_symbols(g))) > 1
+
+            case "<":
+                self.func = lambda g: Thing.are_ascending(self.resolve_symbols(g))
+            case ">":
+                self.func = lambda g: Thing.are_descending(self.resolve_symbols(g))
 
             case 'or':
                 self.func = lambda g: any(r.evaluate(g) for r in self.subrules)
@@ -58,10 +63,10 @@ class Rule:
             case 'nor':
                 self.func = lambda g: not any(r.evaluate(g) for r in self.subrules)
         
-        basic = f in {'link', '-link', 'same', '-same'}
+        basic = f in {'link', '-link', 'same', '-same', '<', '>'}
 
         if basic:
-            self.symbols = set(Symbol(arg) for arg in args)
+            self.symbols = list(Symbol(arg) for arg in args)
 
         else:
             self.subrules = list(Rule(arg) for arg in args)
@@ -70,7 +75,7 @@ class Rule:
         return self.func(g)
     
     def resolve_symbols(self: Rule, g: Game) -> set[Thing]:
-        return set(s.resolve(g) for s in self.symbols)
+        return [s.resolve(g) for s in self.symbols]
     
     def __repr__(self: Rule) -> str:
         if self.symbols:

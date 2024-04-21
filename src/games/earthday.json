@@ -1,0 +1,123 @@
+{
+    "kinds": [
+        {
+            "name": "Person",
+            "things": [
+                "Jake",
+                "Bella",
+                "Ali",
+                "Mimi"
+            ]
+        },
+        {
+            "name": "Snack",
+            "things": [
+                "Carrots",
+                "Cupcakes",
+                "Pretzels",
+                "Grapes"
+            ]
+        },
+        {
+            "name": "Table",
+            "things": [
+                "Table 1",
+                "Table 2",
+                "Table 3",
+                "Table 4"
+            ]
+        }
+    ],
+    "clues": [
+        [
+            {
+                "func": "-link",
+                "args": ["Pretzels", "Jake"]
+            }            
+        ],
+        [
+            {
+                "func": "or",
+                "args": [
+                    {
+                        "func": "link",
+                        "args": ["Bella", "Table 3"]
+                    },
+                    {
+                        "func": "link",
+                        "args": ["Bella", "Table 4"]
+                    }
+                ]
+            }
+        ],
+        [
+            {
+                "func": "-link",
+                "args": ["Carrots::Person", "Table 3"]
+            },
+            {
+                "func": "-link",
+                "args": ["Jake", "Table 3"]
+            }
+        ],
+        [
+            {
+                "func": "link",
+                "args": ["Cupcakes", "Table 3"]
+            }
+        ],
+        [
+            {
+                "func": "-link",
+                "args": ["Ali", "Table 3"]
+            },
+            {
+                "func": "-link",
+                "args": ["Ali", "Table 2"]
+            }
+        ],
+        [
+            {
+                "func": "-link",
+                "args": ["Jake", "Table 3"]
+            }
+        ],
+        [
+            {
+                "func": "-link",
+                "args": ["Cupcakes::Person", "Table 1"]
+            },
+            {
+                "func": "-link",
+                "args": ["Cupcakes::Person", "Table 2"]
+            }
+        ],
+        [
+            {
+                "func": "-link",
+                "args": ["Ali", "Carrots"]
+            }
+        ],
+        [
+            {
+                "func": "link",
+                "args": ["Bella", "Table 3"]
+            }
+
+            
+        ],
+        [
+
+            {
+                "func": "-link",
+                "args": ["Mimi", "Table 1"]
+            }
+        ],
+        [
+            {
+                "func": "<",
+                "args": ["Grapes::Table", "Carrots::Table", "Cupcakes::Table"]
+            }
+        ]
+    ]
+}

@@ -10,7 +10,7 @@ def print_solution(sol: list[list[Thing]]) -> None:
     kinds = list(t.kind for t in sol[0])
     cols = [kinds[:], *[g[:] for g in sol]]
 
-    rows = [[] for _ in cols[:-1]]
+    rows = [[] for _ in kinds]
 
     for col in cols:
         for (i, item) in enumerate(col):
@@ -19,6 +19,10 @@ def print_solution(sol: list[list[Thing]]) -> None:
     print(tabulate(rows, headers=headers, tablefmt="rounded_grid"))
 
 def print_solutions(solutions: list[list[list[Thing]]]) -> None:
+    if not solutions:
+        input('Press Enter to quit')
+        return
+
     pad = len(str(len(solutions)))
 
     i = 0

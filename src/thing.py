@@ -69,10 +69,26 @@ class Thing:
             for (k, t2) in relationships.items():
                 t.set(k, t2)
 
+    def get_numerical_value(self: Thing) -> int:
+        return int(''.join(c for c in self.id if c.isdigit()))
+
     @staticmethod
-    def are_linked(ts: set[Thing]) -> bool:
+    def are_linked(ts: list[Thing]) -> bool:
         for t1 in ts:
             for t2 in ts:
                 if t2.get(t1.kind) is not t1:
                     return False
         return True
+    
+    @staticmethod
+    def are_ascending(ts: list[Thing]) -> bool:
+        print(ts)
+        print([t.get_numerical_value() for t in ts])
+        print(sorted(ts, key=Thing.get_numerical_value) == ts)
+        print()
+
+        return sorted(ts, key=Thing.get_numerical_value) == ts
+    
+    @staticmethod
+    def are_descending(ts: list[Thing]) -> bool:
+        return sorted(ts, key=Thing.get_numerical_value, reverse=True) == ts
