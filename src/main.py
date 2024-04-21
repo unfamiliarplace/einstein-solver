@@ -46,3 +46,7 @@ if __name__ == '__main__':
     g = Game.parse_json(Path('src/games/restaurant.json'))
     n = test_all(g)
     print(f'Found {n} solution(s). Debug to investigate')
+
+# TODO Table output
+# TODO File input
+# TODO New game :)
