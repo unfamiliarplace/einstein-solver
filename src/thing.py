@@ -33,21 +33,6 @@ class Thing:
     def set(self: Thing, key: str, val: Thing) -> None:
         self.relationships[key] = val
 
-    @staticmethod
-    def populate_relationships(d1: dict[str, Thing], d2: dict[str, Thing]) -> dict[str, Thing]:
-        for (k, v) in d1.items():
-            if d2.get(k) not in (None, v):
-                raise Exception('Conflicting key already exists')
-            else:
-                d2[k] = v
-
-    @staticmethod
-    def merge_relationships(d1: dict[str, Thing], d2: dict[str, Thing]) -> dict[str, Thing]:
-        d3 = {}
-        Thing.populate_relationships(d1, d3)
-        Thing.populate_relationships(d2, d3)
-        return d3
-
     def relate(self: Thing, other: Thing) -> bool:
         things = set()
         relationships = {}
@@ -55,12 +40,9 @@ class Thing:
         def _compile(t: Thing) -> None:
             for (k, t2) in t.relationships.items():
                 if t2 not in things:
-                    if relationships.get(k) not in (None, t2):
-                        raise Exception('Conflicting key already exists')
-                    else:
-                        things.add(t2)
-                        relationships[k] = t2
-                        _compile(t2)
+                    things.add(t2)
+                    relationships[k] = t2
+                    _compile(t2)
         
         _compile(self)
         _compile(other)
@@ -82,11 +64,6 @@ class Thing:
     
     @staticmethod
     def are_ascending(ts: list[Thing]) -> bool:
-        print(ts)
-        print([t.get_numerical_value() for t in ts])
-        print(sorted(ts, key=Thing.get_numerical_value) == ts)
-        print()
-
         return sorted(ts, key=Thing.get_numerical_value) == ts
     
     @staticmethod
