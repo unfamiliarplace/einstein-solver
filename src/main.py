@@ -3,17 +3,36 @@ from pathlib import Path
 from game import Game
 from thing import Thing
 import solve
+from tabulate import tabulate
 
 def print_solution(sol: list[list[Thing]]) -> None:
-    print(sol) # TODO
+    headers = ['Set'] + list(range(1, len(sol) + 1))
+    kinds = list(t.kind for t in sol[0])
+    cols = [kinds[:], *[g[:] for g in sol]]
+
+    rows = [[] for _ in cols[:-1]]
+
+    for col in cols:
+        for (i, item) in enumerate(col):
+            rows[i].append(item)
+
+    print(tabulate(rows, headers=headers, tablefmt="rounded_grid"))
 
 def print_solutions(solutions: list[list[list[Thing]]]) -> None:
+    pad = len(str(len(solutions)))
+
     i = 0
-    choice = input('Hit Enter to view the first one or Q to quit: ').strip().upper()
+
+    choice = input('\nPress Enter to view the first one or Q to quit: ').strip().upper()
     while (choice != 'Q') and (i < len(solutions)):
+        print(f'\nSolution # {i+1:>{pad}}/{len(solutions)}')
         print_solution(solutions[i])
         i += 1
-        choice = input('Hit Enter to view next or Q to quit: ').strip().upper()
+
+        if i < (len(solutions)):
+            choice = input('\nPress Enter to view next or Q to quit: ').strip().upper()
+        else:
+            input('\nAll solutions viewed. Press Enter to finish')
 
     print('Finished')
 
@@ -33,11 +52,11 @@ def run() -> None:
 
     g = Game.parse_json(path)
     solutions = solve.find_solutions(g)
-    print(f'Found {len(solutions)} solution(s).')
+
+    print(f'\nFound {len(solutions)} solution(s).')
     print_solutions(solutions)
 
 if __name__ == '__main__':
     run()
 
-# TODO Table output
 # TODO New game :)

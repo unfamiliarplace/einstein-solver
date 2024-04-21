@@ -3,7 +3,7 @@ import itertools
 from thing import Thing
 from game import Game
 
-def expand_worlds(worlds: list[list[Thing]], items: set[Thing]):
+def expand_worlds(worlds: list[list[list[Thing]]], items: set[Thing]):
     for world in worlds:
         for perm in itertools.permutations(items):        
             expanded = []   
