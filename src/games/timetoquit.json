@@ -1,0 +1,126 @@
+{
+    "kinds": [
+        {
+            "name": "Person",
+            "things": [
+                "Bianca",
+                "Charlie",
+                "Ricky",
+                "Roger",
+                "Trenton"
+            ]
+        },
+        {
+            "name": "Magazine",
+            "things": [
+                "Fortune",
+                "Newsweek",
+                "People",
+                "Time",
+                "US Weekly"
+            ]
+        },
+        {
+            "name": "Fruit",
+            "things": [
+                "Apples",
+                "Boysenberries",
+                "Guavas",
+                "Kiwis",
+                "Strawberries"
+            ]
+        },
+        {
+            "name": "Last Day",
+            "things": [
+                "01-13",
+                "05-28",
+                "07-08",
+                "08-08",
+                "09-23"
+            ]
+        }
+    ],
+    "clues": [
+
+        [
+            {
+                "func": "-link",
+                "args": ["Kiwis", "07-08", "People", "Trenton", "Guavas"]
+            }
+        ],
+        [
+            {
+                "func": "<",
+                "args": ["Time::Last Day", "Newsweek::Last Day"]
+            }
+        ],
+        [
+            {
+                "func": "-link",
+                "args": ["Time", "Guavas"]
+            }
+        ],
+        [
+            {
+                "func": "<",
+                "args": ["Time::Last Day", "Ricky::Last Day"]
+            }
+        ],
+        [
+            {
+                "func": "-link",
+                "args": ["Trenton", "Apples"]
+            },
+            {
+                "func": "-link",
+                "args": ["09-23", "US Weekly"]
+            }
+        ],
+        [
+            {
+                "func": "link",
+                "args": ["Boysenberries", "Trenton"]
+            }
+        ],
+        [
+            {
+                "func": ">",
+                "args": ["Bianca::Last Day", "Roger::Last Day"]
+            }
+        ],
+        [
+            {
+                "func": "-link",
+                "args": ["Newsweek", "Ricky"]
+            }
+        ],
+        [
+            {
+                "func": "-link",
+                "args": ["Kiwis", "Roger"]
+            }
+        ],
+        [
+            {
+                "func": "xor",
+                "args": [
+                    {
+                        "func": "link",
+                        "args": ["01-13", "Strawberries"]
+                    },
+                    {
+                        "func": "link",
+                        "args": ["09-23", "Strawberries"]
+                    }
+                ]
+            }
+        ],
+        [
+            {
+                "func": "link",
+                "args": ["US Weekly", "Bianca"]
+            }
+        ]
+    ]
+}

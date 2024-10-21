@@ -2,6 +2,7 @@
 import itertools
 from thing import Thing
 from game import Game
+import progressbar
 
 def expand_worlds(worlds: list[list[list[Thing]]], items: set[Thing]):
     for world in worlds:
@@ -33,7 +34,7 @@ def find_solutions(g: Game) -> list[list[Thing]]:
     g.reset_relationships()
 
     good = 0
-    for world in get_all_worlds(g):
+    for world in progressbar.progressbar(get_all_worlds(g)):
         realize_world(world)
 
         if g.validate_all_clues():
