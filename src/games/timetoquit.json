@@ -69,6 +69,39 @@
         ],
         [
             {
+                "func": "xor",
+                "args": [
+                    {
+                        "func": "and",
+                        "args": [
+                            {
+                                "func": "link",
+                                "args": ["Trenton", "09-23"]
+                            },
+                            {
+                                "func": "link",
+                                "args": ["Apples", "US Weekly"]
+                            }
+                        ]
+                        
+                    },
+                    {
+                        "func": "and",
+                        "args": [
+                            {
+                                "func": "link",
+                                "args": ["Trenton", "US Weekly"]
+                            },
+                            {
+                                "func": "link",
+                                "args": ["Apples", "09-23"]
+                            }
+                        ]
+                        
+                    }
+                ]
+            },
+            {
                 "func": "-link",
                 "args": ["Trenton", "Apples"]
             },
