@@ -1,4 +1,5 @@
 from __future__ import annotations
+import itertools
 
 class Thing:
     id: str
@@ -56,11 +57,18 @@ class Thing:
 
     @staticmethod
     def are_linked(ts: list[Thing]) -> bool:
-        for t1 in ts:
-            for t2 in ts:
-                if t2.get(t1.kind) is not t1:
-                    return False
-        return True
+        """"
+        Return True iff the given Things list each other under the respective kinds.
+        For example, John and Apples are linked iff John::Food == Apples
+        and Apples::Person == John. The linkage must be bidirectional.
+
+        Where there are more than two items, ANY link counts as a link for the list.
+        False is returned iff no item is linked with any other.
+        """
+        for (t1, t2) in itertools.combinations(ts, 2):
+            if (t1.get(t2.kind) is t2) and (t2.get(t1.kind) is t1):
+                return True
+        return False
     
     @staticmethod
     def are_ascending(ts: list[Thing]) -> bool:
