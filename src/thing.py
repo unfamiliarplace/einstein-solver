@@ -72,8 +72,18 @@ class Thing:
     
     @staticmethod
     def are_ascending(ts: list[Thing]) -> bool:
-        return sorted(ts, key=Thing.get_numerical_value) == ts
+        """Strict: every item must actually be lt than the next."""
+        nums = list(t.get_numerical_value() for t in ts)
+        for i in range(len(nums) - 1):
+            if not (nums[i] < nums[i + 1]):
+                return False
+        return True
     
     @staticmethod
     def are_descending(ts: list[Thing]) -> bool:
-        return sorted(ts, key=Thing.get_numerical_value, reverse=True) == ts
+        """Strict: every item must actually be gt than the next."""
+        nums = list(t.get_numerical_value() for t in ts)
+        for i in range(len(nums) - 1):
+            if not (nums[i] > nums[i + 1]):
+                return False
+        return True
