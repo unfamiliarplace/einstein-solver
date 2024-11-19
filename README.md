@@ -126,10 +126,17 @@ and:
 
 P.S. Note that having two rules is the same as having one rule that uses `and` to join two subrules. Also, if you think about it, saying `-link` with arguments `Trenton` and `Apples` is the same as saying `-same` with arguments `Trenton::Fruit` and `Apples` or with arguments `Trenton` and `Apples::Person`. There are often multiple ways to say something. You might observe that `same` is more specific (and it also runs faster), but it would be much harder to construct our first clue above without `link`, because we would have to explicitly enumerate every pair of relationships.
 
-The rest of the clues should be comprehensible from the above start. To see a full translation (and the whole structure of the JSON file), read [`timetoquit.json`][src/games/timetoquit.json].
+The rest of the clues should be comprehensible from the above start. To see a full translation (and the whole structure of the JSON file), read [`timetoquit.json`][src/games/timetoquit.json]. Try it out by running `main.py` and selecting `timetoquit`.
 
 ## TODO
 
 * Add `>a` and `<a` functions for alphabetical sorting.
 * Add `>=`, `<=`, `>=a`, `<=a` variants.
-* Make an easier way to create games.
+* Make an easier way to create game files, perhaps a graphic interface or a text file notation.
+* Remove the `progressbar` dependency, providing a simple print progress statement if it's not present.
+* Remove the `tabulate` dependency, providing a simple handmade table if it's not present.
+
+## Dependencies
+
+* `tabulate` for pretty-printing solutions
+* `progressbar` for attractive display of solution-finding progress
