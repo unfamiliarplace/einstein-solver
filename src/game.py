@@ -59,7 +59,7 @@ class Rule:
                 self.func = lambda g: sum(r.evaluate(g) for r in self.subrules) == 1
             case 'nand':
                 self.func = lambda g: sum(r.evaluate(g) for r in self.subrules) < len(self.subrules)
-            case 'nor':
+            case 'nor' | 'not':
                 self.func = lambda g: not any(r.evaluate(g) for r in self.subrules)
         
         basic = f in {'link', '-link', 'same', '-same', '<', '>'}
