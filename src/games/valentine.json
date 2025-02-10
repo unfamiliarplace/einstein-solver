@@ -1,0 +1,229 @@
+{
+    "kinds": [
+        {
+            "name": "Person",
+            "things": [
+                "Anthony",
+                "Bruce",
+                "Carl",
+                "Daniel"
+            ]
+        },
+        {
+            "name": "Girl",
+            "things": [
+                "Anne",
+                "Bernadette",
+                "Celine",
+                "Dahlia"
+            ]
+        },
+        {
+            "name": "Theater",
+            "things": [
+                "A",
+                "B",
+                "C",
+                "D"
+            ]
+        },
+        {
+            "name": "Genre",
+            "things": [
+                "Musical",
+                "Romance",
+                "Sci-Fi",
+                "Thriller"
+            ]
+        }
+    ],
+    "clues": [
+        [
+            {
+                "func": "xor",
+                "args": [
+                    {
+                        "func": "and",
+                        "args": [
+                            {
+                                "func": "link",
+                                "args": ["Anne", "Anthony"]
+                            },
+                            {
+                                "func": "link",
+                                "args": ["Anne", "Musical"]
+                            },
+                            {
+                                "func": "link",
+                                "args": ["Anthony", "Musical"]
+                            }
+                        ]
+                        
+                    },
+                    {
+                        "func": "and",
+                        "args": [
+                            {
+                                "func": "link",
+                                "args": ["Bruce", "Bernadette"]
+                            },
+                            {
+                                "func": "link",
+                                "args": ["Bruce", "Musical"]
+                            },
+                            {
+                                "func": "link",
+                                "args": ["Bernadette", "Musical"]
+                            }
+                        ]
+                        
+                    },
+                    {
+                        "func": "and",
+                        "args": [
+                            {
+                                "func": "link",
+                                "args": ["Carl", "Celine"]
+                            },
+                            {
+                                "func": "link",
+                                "args": ["Carl", "Musical"]
+                            },
+                            {
+                                "func": "link",
+                                "args": ["Celine", "Musical"]
+                            }
+                        ]
+                        
+                    },
+                    {
+                        "func": "and",
+                        "args": [
+                            {
+                                "func": "link",
+                                "args": ["Dahlia", "Daniel"]
+                            },
+                            {
+                                "func": "link",
+                                "args": ["Dahlia", "Musical"]
+                            },
+                            {
+                                "func": "link",
+                                "args": ["Daniel", "Musical"]
+                            }
+                        ]
+                        
+                    }
+                ]
+            }
+        ],
+        [
+            {
+                "func": "-link",
+                "args": ["Anne", "A"]
+            },
+            {
+                "func": "-link",
+                "args": ["Anthony", "A"]
+            },
+            {
+                "func": "-link",
+                "args": ["Bruce", "B"]
+            },
+            {
+                "func": "-link",
+                "args": ["Bernadette", "B"]
+            },
+            {
+                "func": "-link",
+                "args": ["Carl", "C"]
+            },
+            {
+                "func": "-link",
+                "args": ["Celine", "C"]
+            },
+            {
+                "func": "-link",
+                "args": ["Dahlia", "D"]
+            },
+            {
+                "func": "-link",
+                "args": ["Daniel", "D"]
+            }
+        ],
+        [
+            {
+                "func": "-link",
+                "args": ["Anthony", "Romance"]
+            },
+            {
+                "func": "-link",
+                "args": ["Anthony", "Thriller"]
+            }
+        ],
+        [
+            {
+                "func": "-link",
+                "args": ["Sci-Fi", "A"]
+            },
+            {
+                "func": "-link",
+                "args": ["Sci-Fi", "Anne"]
+            },
+            {
+                "func": "-link",
+                "args": ["Sci-Fi", "Dahlia"]
+            }
+        ],
+        [
+            {
+                "func": "xor",
+                "args": [
+                    {
+                        "func": "and",
+                        "args": [
+                            {
+                                "func": "link",
+                                "args": ["Celine", "Thriller"]
+                            },
+                            {
+                                "func": "link",
+                                "args": ["Daniel", "A"]
+                            }
+                        ]
+                    },
+                    {
+                        "func": "and",
+                        "args": [
+                            {
+                                "func": "link",
+                                "args": ["Daniel", "Thriller"]
+                            },
+                            {
+                                "func": "link",
+                                "args": ["Celine", "A"]
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        [
+            {
+                "func": "-link",
+                "args": ["Anne", "Thriller"]
+            },
+            {
+                "func": "-link",
+                "args": ["Carl", "Musical"]
+            },
+            {
+                "func": "-link",
+                "args": ["Bernadette", "D"]
+            }
+        ],
+        [
+            
+        ]
+    ]
+}
