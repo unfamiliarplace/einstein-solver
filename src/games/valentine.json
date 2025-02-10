@@ -48,7 +48,44 @@
                             {
                                 "func": "link",
                                 "args": ["Anne", "Anthony"]
-                            },
+                            }
+                        ]
+                    },
+                    {
+                        "func": "and",
+                        "args": [
+                            {
+                                "func": "link",
+                                "args": ["Bruce", "Bernadette"]
+                            }
+                        ]                        
+                    },
+                    {
+                        "func": "and",
+                        "args": [
+                            {
+                                "func": "link",
+                                "args": ["Carl", "Celine"]
+                            }
+                        ]                        
+                    },
+                    {
+                        "func": "and",
+                        "args": [
+                            {
+                                "func": "link",
+                                "args": ["Dahlia", "Daniel"]
+                            }
+                        ]                        
+                    }
+                ]
+            },
+            {
+                "func": "xor",
+                "args": [
+                    {
+                        "func": "and",
+                        "args": [
                             {
                                 "func": "link",
                                 "args": ["Anne", "Musical"]
@@ -58,15 +95,10 @@
                                 "args": ["Anthony", "Musical"]
                             }
                         ]
-                        
                     },
                     {
                         "func": "and",
                         "args": [
-                            {
-                                "func": "link",
-                                "args": ["Bruce", "Bernadette"]
-                            },
                             {
                                 "func": "link",
                                 "args": ["Bruce", "Musical"]
@@ -75,16 +107,11 @@
                                 "func": "link",
                                 "args": ["Bernadette", "Musical"]
                             }
-                        ]
-                        
+                        ]                        
                     },
                     {
                         "func": "and",
                         "args": [
-                            {
-                                "func": "link",
-                                "args": ["Carl", "Celine"]
-                            },
                             {
                                 "func": "link",
                                 "args": ["Carl", "Musical"]
@@ -93,16 +120,11 @@
                                 "func": "link",
                                 "args": ["Celine", "Musical"]
                             }
-                        ]
-                        
+                        ]                        
                     },
                     {
                         "func": "and",
                         "args": [
-                            {
-                                "func": "link",
-                                "args": ["Dahlia", "Daniel"]
-                            },
                             {
                                 "func": "link",
                                 "args": ["Dahlia", "Musical"]
@@ -111,8 +133,7 @@
                                 "func": "link",
                                 "args": ["Daniel", "Musical"]
                             }
-                        ]
-                        
+                        ]                        
                     }
                 ]
             }
@@ -223,7 +244,7 @@
             }
         ],
         [
-            
+
         ]
     ]
 }
