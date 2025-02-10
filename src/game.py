@@ -51,6 +51,21 @@ class Rule:
             case ">":
                 self.func = lambda g: Thing.are_descending(self.resolve_symbols(g))
 
+            case "<=":
+                self.func = lambda g: Thing.are_ascending_or_equal(self.resolve_symbols(g))
+            case ">=":
+                self.func = lambda g: Thing.are_descending_or_equal(self.resolve_symbols(g))
+
+            case "<a":
+                self.func = lambda g: Thing.are_ascending_alpha(self.resolve_symbols(g))
+            case ">a":
+                self.func = lambda g: Thing.are_descending_alpha(self.resolve_symbols(g))
+
+            case "<=a":
+                self.func = lambda g: Thing.are_ascending_or_equal_alpha(self.resolve_symbols(g))
+            case ">=a":
+                self.func = lambda g: Thing.are_descending_or_equal_alpha(self.resolve_symbols(g))
+
             case 'or':
                 self.func = lambda g: any(r.evaluate(g) for r in self.subrules)
             case 'and':

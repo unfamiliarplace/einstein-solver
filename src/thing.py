@@ -52,9 +52,6 @@ class Thing:
             for (k, t2) in relationships.items():
                 t.set(k, t2)
 
-    def get_numerical_value(self: Thing) -> int:
-        return int(''.join(c for c in self.id if c.isdigit()))
-
     @staticmethod
     def are_linked(ts: list[Thing]) -> bool:
         """"
@@ -69,6 +66,9 @@ class Thing:
             if (t1.get(t2.kind) is t2) and (t2.get(t1.kind) is t1):
                 return True
         return False
+
+    def get_numerical_value(self: Thing) -> int:
+        return int(''.join(c for c in self.id if c.isdigit()))
     
     @staticmethod
     def are_ascending(ts: list[Thing]) -> bool:
@@ -80,10 +80,62 @@ class Thing:
         return True
     
     @staticmethod
+    def are_ascending_or_equal(ts: list[Thing]) -> bool:
+        nums = list(t.get_numerical_value() for t in ts)
+        for i in range(len(nums) - 1):
+            if not (nums[i] <= nums[i + 1]):
+                return False
+        return True
+    
+    @staticmethod
     def are_descending(ts: list[Thing]) -> bool:
         """Strict: every item must actually be gt than the next."""
         nums = list(t.get_numerical_value() for t in ts)
         for i in range(len(nums) - 1):
             if not (nums[i] > nums[i + 1]):
+                return False
+        return True
+    
+    @staticmethod
+    def are_descending_or_equal(ts: list[Thing]) -> bool:
+        nums = list(t.get_numerical_value() for t in ts)
+        for i in range(len(nums) - 1):
+            if not (nums[i] >= nums[i + 1]):
+                return False
+        return True
+    
+    @staticmethod
+    def are_ascending_alpha(ts: list[Thing]) -> bool:
+        """Strict: every item must actually be lt than the next."""
+        vals = list(t.id for t in ts)
+        for i in range(len(vals) - 1):
+            if not (vals[i] < vals[i + 1]):
+                return False
+        return True
+    
+    @staticmethod
+    def are_ascending_or_equal_alpha(ts: list[Thing]) -> bool:
+        """Strict: every item must actually be lt than the next."""
+        vals = list(t.id for t in ts)
+        for i in range(len(vals) - 1):
+            if not (vals[i] <= vals[i + 1]):
+                return False
+        return True
+    
+    @staticmethod
+    def are_descending_alpha(ts: list[Thing]) -> bool:
+        """Strict: every item must actually be gt than the next."""
+        vals = list(t.id for t in ts)
+        for i in range(len(vals) - 1):
+            if not (vals[i] > vals[i + 1]):
+                return False
+        return True
+    
+    @staticmethod
+    def are_descending_or_equal_alpha(ts: list[Thing]) -> bool:
+        """Strict: every item must actually be gt than the next."""
+        vals = list(t.id for t in ts)
+        for i in range(len(vals) - 1):
+            if not (vals[i] >= vals[i + 1]):
                 return False
         return True

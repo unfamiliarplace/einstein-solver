@@ -128,15 +128,14 @@ P.S. Note that having two rules is the same as having one rule that uses `and` t
 
 The rest of the clues should be comprehensible from the above start. To see a full translation (and the whole structure of the JSON file), read [`timetoquit.json`](src/games/timetoquit.json). Try it out by running `main.py` and selecting `timetoquit`.
 
-## TODO
-
-* Add `>a` and `<a` functions for alphabetical sorting.
-* Add `>=`, `<=`, `>=a`, `<=a` variants.
-* Make an easier way to create game files, perhaps a graphic interface or a text file notation.
-* Remove the `progressbar` dependency, providing a simple print progress statement if it's not present.
-* Remove the `tabulate` dependency, providing a simple handmade table if it's not present.
-
 ## Dependencies
 
 * `tabulate` for pretty-printing solutions
 * `progressbar` for attractive display of solution-finding progress
+
+
+## TODO
+
+* Make an easier way to create game files, perhaps a graphic interface or a text file notation.
+* Remove the `progressbar` dependency, providing a simple print progress statement if it's not present.
+* Remove the `tabulate` dependency, providing a simple handmade table if it's not present.
