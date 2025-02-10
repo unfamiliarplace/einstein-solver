@@ -5,10 +5,12 @@ class Thing:
     id: str
     kind: str
     relationships: dict[str, Thing]
+    fellows: set[Thing]
 
     def __init__(self: Thing, id: str, kind: str) -> None:
         self.id = id
         self.kind = kind
+        self.fellows = set()
         self.reset_relationships()
 
     def __hash__(self: Thing) -> int:
