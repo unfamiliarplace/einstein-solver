@@ -37,35 +37,60 @@ class Rule:
         f, args = json['func'], json['args']
 
         match f:
+
+            # Link
             case 'link':
                 self.func = lambda g: Thing.are_linked(self.resolve_symbols(g))
             case '-link':
                 self.func = lambda g: not Thing.are_linked(self.resolve_symbols(g))
+
+            # Same
             case 'same':
                 self.func = lambda g: len(set(self.resolve_symbols(g))) == 1
             case '-same':
                 self.func = lambda g: len(set(self.resolve_symbols(g))) > 1
 
+            # Ascending, descending
             case "<":
                 self.func = lambda g: Thing.are_ascending(self.resolve_symbols(g))
             case ">":
                 self.func = lambda g: Thing.are_descending(self.resolve_symbols(g))
+            case "-<":
+                self.func = lambda g: not Thing.are_ascending(self.resolve_symbols(g))
+            case "->":
+                self.func = lambda g: not Thing.are_descending(self.resolve_symbols(g))
 
+            # Ascending, descending (non-strict)
             case "<=":
                 self.func = lambda g: Thing.are_ascending_or_equal(self.resolve_symbols(g))
             case ">=":
                 self.func = lambda g: Thing.are_descending_or_equal(self.resolve_symbols(g))
+            case "-<=":
+                self.func = lambda g: not Thing.are_ascending_or_equal(self.resolve_symbols(g))
+            case "->=":
+                self.func = lambda g: not Thing.are_descending_or_equal(self.resolve_symbols(g))
 
+            # Ascending, descending (alpha)
             case "<a":
                 self.func = lambda g: Thing.are_ascending_alpha(self.resolve_symbols(g))
             case ">a":
                 self.func = lambda g: Thing.are_descending_alpha(self.resolve_symbols(g))
+            case "-<a":
+                self.func = lambda g: not Thing.are_ascending_alpha(self.resolve_symbols(g))
+            case "->a":
+                self.func = lambda g: not Thing.are_descending_alpha(self.resolve_symbols(g))
 
+            # Ascending, descending (non-strict alpha)
             case "<=a":
                 self.func = lambda g: Thing.are_ascending_or_equal_alpha(self.resolve_symbols(g))
             case ">=a":
                 self.func = lambda g: Thing.are_descending_or_equal_alpha(self.resolve_symbols(g))
+            case "-<=a":
+                self.func = lambda g: not Thing.are_ascending_or_equal_alpha(self.resolve_symbols(g))
+            case "->=a":
+                self.func = lambda g: not Thing.are_descending_or_equal_alpha(self.resolve_symbols(g))
 
+            # Meta relationships
             case 'or':
                 self.func = lambda g: any(r.evaluate(g) for r in self.subrules)
             case 'and':
@@ -74,10 +99,10 @@ class Rule:
                 self.func = lambda g: sum(r.evaluate(g) for r in self.subrules) == 1
             case 'nand':
                 self.func = lambda g: sum(r.evaluate(g) for r in self.subrules) < len(self.subrules)
-            case 'nor' | 'not':
+            case 'nor' | 'not' | '-':
                 self.func = lambda g: not any(r.evaluate(g) for r in self.subrules)
         
-        basic = f in {'link', '-link', 'same', '-same', '<', '>'}
+        basic = f not in {'or', 'and', 'xor', 'nand', 'nor', 'not', '-'}
 
         if basic:
             self.symbols = list(Symbol(arg) for arg in args)
