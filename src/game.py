@@ -179,6 +179,7 @@ class Game:
         with open(path, 'r') as f:
             data = json.loads(f.read())
         
+        # Parse groups of things
         for group in data['kinds']:
             name, things = group['name'], group['things']
             s = set()
@@ -188,6 +189,12 @@ class Game:
                 g.keys[thing] = t
             g.sets[name] = s
 
+        # Make each thing aware of its fellows in the kind
+        for kind in g.sets:
+            for thing in g.sets[kind]:
+                thing.fellows = g.sets[kind]
+
+        # Parse clues
         for clue in data['clues']:
             c = Clue()
             for json_rule in clue:
