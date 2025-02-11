@@ -73,7 +73,7 @@ class Thing:
         return int(''.join(c for c in self.id if c.isdigit()))
 
     def get_alphabetical_value(self: Thing) -> int:
-        return ''.join(c.casefold for c in self.id)
+        return ''.join(c.casefold() for c in self.id)
     
     @staticmethod
     def are_ascending(ts: list[Thing]) -> bool:
@@ -150,8 +150,8 @@ class Thing:
         nums = list(t.get_numerical_value() for t in ts)
         nums_ordered = sorted(list(t.get_numerical_value() for t in ts[0].fellows))
         for i in range(len(nums) - 1):
-            ia = nums.index(nums_ordered[i])
-            ib = nums.index(nums_ordered[i + 1])
+            ia = nums_ordered.index(nums[i])
+            ib = nums_ordered.index(nums[i + 1])
             if abs(ia - ib) > 1:
                 return False
         return True
@@ -161,8 +161,8 @@ class Thing:
         nums = list(t.get_numerical_value() for t in ts)
         nums_ordered = sorted(list(t.get_numerical_value() for t in ts[0].fellows))
         for i in range(len(nums) - 1):
-            ia = nums.index(nums_ordered[i])
-            ib = nums.index(nums_ordered[i + 1])
+            ia = nums_ordered.index(nums[i])
+            ib = nums_ordered.index(nums[i + 1])
             if (ib - ia) != 1:
                 return False
         return True
@@ -172,8 +172,8 @@ class Thing:
         nums = list(t.get_numerical_value() for t in ts)
         nums_ordered = sorted(list(t.get_numerical_value() for t in ts[0].fellows))
         for i in range(len(nums) - 1):
-            ia = nums.index(nums_ordered[i])
-            ib = nums.index(nums_ordered[i + 1])
+            ia = nums_ordered.index(nums[i])
+            ib = nums_ordered.index(nums[i + 1])
             if (ia - ib) != 1:
                 return False
         return True
@@ -183,8 +183,8 @@ class Thing:
         vals = list(t.get_alphabetical_value() for t in ts)
         vals_ordered = sorted(list(t.get_alphabetical_value() for t in ts[0].fellows))
         for i in range(len(vals) - 1):
-            ia = vals.index(vals_ordered[i])
-            ib = vals.index(vals_ordered[i + 1])
+            ia = vals_ordered.index(vals[i])
+            ib = vals_ordered.index(vals[i + 1])
             if abs(ia - ib) > 1:
                 return False
         return True
@@ -194,8 +194,8 @@ class Thing:
         vals = list(t.get_alphabetical_value() for t in ts)
         vals_ordered = sorted(list(t.get_alphabetical_value() for t in ts[0].fellows))
         for i in range(len(vals) - 1):
-            ia = vals.index(vals_ordered[i])
-            ib = vals.index(vals_ordered[i + 1])
+            ia = vals_ordered.index(vals[i])
+            ib = vals_ordered.index(vals[i + 1])
             if (ib - ia) != 1:
                 return False
         return True
@@ -205,9 +205,8 @@ class Thing:
         vals = list(t.get_alphabetical_value() for t in ts)
         vals_ordered = sorted(list(t.get_alphabetical_value() for t in ts[0].fellows))
         for i in range(len(vals) - 1):
-            ia = vals.index(vals_ordered[i])
-            ib = vals.index(vals_ordered[i + 1])
+            ia = vals_ordered.index(vals[i])
+            ib = vals_ordered.index(vals[i + 1])
             if (ia - ib) != 1:
                 return False
         return True
-
