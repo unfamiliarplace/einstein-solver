@@ -141,3 +141,70 @@ class Thing:
             if not (vals[i] >= vals[i + 1]):
                 return False
         return True
+
+    @staticmethod
+    def are_adjacent(ts: list[Thing]) -> bool:
+        nums = list(t.get_numerical_value() for t in ts)
+        nums_ordered = sorted(list(t.get_numerical_value() for t in ts[0].fellows))
+        for i in range(len(nums) - 1):
+            ia = nums.index(nums_ordered[i])
+            ib = nums.index(nums_ordered[i + 1])
+            if abs(ia - ib) > 1:
+                return False
+        return True
+
+    @staticmethod
+    def are_adjacent_ascending(ts: list[Thing]) -> bool:
+        nums = list(t.get_numerical_value() for t in ts)
+        nums_ordered = sorted(list(t.get_numerical_value() for t in ts[0].fellows))
+        for i in range(len(nums) - 1):
+            ia = nums.index(nums_ordered[i])
+            ib = nums.index(nums_ordered[i + 1])
+            if (ib - ia) != 1:
+                return False
+        return True
+    
+    @staticmethod
+    def are_adjacent_descending(ts: list[Thing]) -> bool:
+        nums = list(t.get_numerical_value() for t in ts)
+        nums_ordered = sorted(list(t.get_numerical_value() for t in ts[0].fellows))
+        for i in range(len(nums) - 1):
+            ia = nums.index(nums_ordered[i])
+            ib = nums.index(nums_ordered[i + 1])
+            if (ia - ib) != 1:
+                return False
+        return True
+
+    @staticmethod
+    def are_adjacent_alpha(ts: list[Thing]) -> bool:
+        vals = list(t.get_numerical_value() for t in ts)
+        vals_ordered = sorted(list(t.id for t in ts[0].fellows))
+        for i in range(len(vals) - 1):
+            ia = vals.index(vals_ordered[i])
+            ib = vals.index(vals_ordered[i + 1])
+            if abs(ia - ib) > 1:
+                return False
+        return True
+
+    @staticmethod
+    def are_adjacent_ascending_alpha(ts: list[Thing]) -> bool:
+        vals = list(t.get_numerical_value() for t in ts)
+        vals_ordered = sorted(list(t.id for t in ts[0].fellows))
+        for i in range(len(vals) - 1):
+            ia = vals.index(vals_ordered[i])
+            ib = vals.index(vals_ordered[i + 1])
+            if (ib - ia) != 1:
+                return False
+        return True
+    
+    @staticmethod
+    def are_adjacent_descending_alpha(ts: list[Thing]) -> bool:
+        vals = list(t.get_numerical_value() for t in ts)
+        vals_ordered = sorted(list(t.id for t in ts[0].fellows))
+        for i in range(len(vals) - 1):
+            ia = vals.index(vals_ordered[i])
+            ib = vals.index(vals_ordered[i + 1])
+            if (ia - ib) != 1:
+                return False
+        return True
+
