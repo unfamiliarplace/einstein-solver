@@ -71,6 +71,9 @@ class Thing:
 
     def get_numerical_value(self: Thing) -> int:
         return int(''.join(c for c in self.id if c.isdigit()))
+
+    def get_alphabetical_value(self: Thing) -> int:
+        return ''.join(c.casefold for c in self.id)
     
     @staticmethod
     def are_ascending(ts: list[Thing]) -> bool:
@@ -177,8 +180,8 @@ class Thing:
 
     @staticmethod
     def are_adjacent_alpha(ts: list[Thing]) -> bool:
-        vals = list(t.get_numerical_value() for t in ts)
-        vals_ordered = sorted(list(t.id for t in ts[0].fellows))
+        vals = list(t.get_alphabetical_value() for t in ts)
+        vals_ordered = sorted(list(t.get_alphabetical_value() for t in ts[0].fellows))
         for i in range(len(vals) - 1):
             ia = vals.index(vals_ordered[i])
             ib = vals.index(vals_ordered[i + 1])
@@ -188,8 +191,8 @@ class Thing:
 
     @staticmethod
     def are_adjacent_ascending_alpha(ts: list[Thing]) -> bool:
-        vals = list(t.get_numerical_value() for t in ts)
-        vals_ordered = sorted(list(t.id for t in ts[0].fellows))
+        vals = list(t.get_alphabetical_value() for t in ts)
+        vals_ordered = sorted(list(t.get_alphabetical_value() for t in ts[0].fellows))
         for i in range(len(vals) - 1):
             ia = vals.index(vals_ordered[i])
             ib = vals.index(vals_ordered[i + 1])
@@ -199,8 +202,8 @@ class Thing:
     
     @staticmethod
     def are_adjacent_descending_alpha(ts: list[Thing]) -> bool:
-        vals = list(t.get_numerical_value() for t in ts)
-        vals_ordered = sorted(list(t.id for t in ts[0].fellows))
+        vals = list(t.get_alphabetical_value() for t in ts)
+        vals_ordered = sorted(list(t.get_alphabetical_value() for t in ts[0].fellows))
         for i in range(len(vals) - 1):
             ia = vals.index(vals_ordered[i])
             ib = vals.index(vals_ordered[i + 1])

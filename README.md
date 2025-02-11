@@ -17,8 +17,12 @@ Although the solver is fairly powerful, the "UX" is not very refined and require
         - `func`. The available functions are these:  
             - `link` and `-link` (not `link`): Whether a direction relationship exists between two things. For example, if we know that `Jason`'s favourite food is `Pizza`, we could mark `Jason` and `Pizza` as linked.
             - `same` and `-same` (not `same`): Whether two things are known to be the same. For example, if we know that `Jason`'s favourite food is `Pizza`, we could mark `Jason::Food` and `Pizza` as being the same.
-            - `<` and `>`: Whether two objects can be numerically sorted in this order. For example, if we know that `Jason`'s favourite month comes before `Richard`'s, we could mark `Jason::Month` and `Richard::Month` as being in a `<` relationship.
             - `not`, `and`, `or`, `nor`, `nand`, `xor`: boolean operators whose arguments will be lists of rules instead of things. All of these can take arbitrary numbers of rules.
+            - sorting functions:
+              - `<` `>` `<=` `>=`: Whether two or more objects can be numerically sorted in this order. For example, if we know that `Jason`'s favourite month comes before `Richard`'s, we could mark `Jason::Month` and `Richard::Month` as being in a `<` relationship.
+              - `adj`, `adj<`, `adj>` (adacent): Whether two or more objects are adjacent when ordered. For example, if a set of things is `1`, `3`, `6`, and `8`, then `adj` with arguments `3` and `6` is `True`.
+              - These can all be prefixed by `-` to stipulate their negation.
+              - These can all be suffixed by `A` to use alphabetic sorting instead of numerical sorting.
         - `args`. A list of symbols or, for the boolean operators, rules. A symbol can be the name of a thing, e.g. `Jason`, or it can be a relationship, e.g. `Jason::Food` (the `Food` asssociated with `Jason`). Relationships can be any depth.
 
 2. Run `main.py` and select your game. All possible solutions will be presented one at a time.
