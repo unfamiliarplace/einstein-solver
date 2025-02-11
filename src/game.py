@@ -1,5 +1,5 @@
 from __future__ import annotations
-from thing import Thing
+from thing import Thing, ThingSort
 from pathlib import Path
 import json
 
@@ -52,71 +52,71 @@ class Rule:
 
             # Ascending, descending
             case "<":
-                self.func = lambda g: Thing.are_ascending(self.resolve_symbols(g))
+                self.func = lambda g: ThingSort.are_ascending(self.resolve_symbols(g))
             case ">":
-                self.func = lambda g: Thing.are_descending(self.resolve_symbols(g))
+                self.func = lambda g: ThingSort.are_descending(self.resolve_symbols(g))
             case "-<":
-                self.func = lambda g: not Thing.are_ascending(self.resolve_symbols(g))
+                self.func = lambda g: not ThingSort.are_ascending(self.resolve_symbols(g))
             case "->":
-                self.func = lambda g: not Thing.are_descending(self.resolve_symbols(g))
+                self.func = lambda g: not ThingSort.are_descending(self.resolve_symbols(g))
 
             # Ascending, descending (non-strict)
             case "<=":
-                self.func = lambda g: Thing.are_ascending_or_equal(self.resolve_symbols(g))
+                self.func = lambda g: ThingSort.are_ascending_or_equal(self.resolve_symbols(g))
             case ">=":
-                self.func = lambda g: Thing.are_descending_or_equal(self.resolve_symbols(g))
+                self.func = lambda g: ThingSort.are_descending_or_equal(self.resolve_symbols(g))
             case "-<=":
-                self.func = lambda g: not Thing.are_ascending_or_equal(self.resolve_symbols(g))
+                self.func = lambda g: not ThingSort.are_ascending_or_equal(self.resolve_symbols(g))
             case "->=":
-                self.func = lambda g: not Thing.are_descending_or_equal(self.resolve_symbols(g))
+                self.func = lambda g: not ThingSort.are_descending_or_equal(self.resolve_symbols(g))
 
             # Ascending, descending (alpha)
             case "<A":
-                self.func = lambda g: Thing.are_ascending_alpha(self.resolve_symbols(g))
+                self.func = lambda g: ThingSort.are_ascending_alpha(self.resolve_symbols(g))
             case ">A":
-                self.func = lambda g: Thing.are_descending_alpha(self.resolve_symbols(g))
+                self.func = lambda g: ThingSort.are_descending_alpha(self.resolve_symbols(g))
             case "-<A":
-                self.func = lambda g: not Thing.are_ascending_alpha(self.resolve_symbols(g))
+                self.func = lambda g: not ThingSort.are_ascending_alpha(self.resolve_symbols(g))
             case "->A":
-                self.func = lambda g: not Thing.are_descending_alpha(self.resolve_symbols(g))
+                self.func = lambda g: not ThingSort.are_descending_alpha(self.resolve_symbols(g))
 
             # Ascending, descending (non-strict alpha)
             case "<=A":
-                self.func = lambda g: Thing.are_ascending_or_equal_alpha(self.resolve_symbols(g))
+                self.func = lambda g: ThingSort.are_ascending_or_equal_alpha(self.resolve_symbols(g))
             case ">=A":
-                self.func = lambda g: Thing.are_descending_or_equal_alpha(self.resolve_symbols(g))
+                self.func = lambda g: ThingSort.are_descending_or_equal_alpha(self.resolve_symbols(g))
             case "-<=A":
-                self.func = lambda g: not Thing.are_ascending_or_equal_alpha(self.resolve_symbols(g))
+                self.func = lambda g: not ThingSort.are_ascending_or_equal_alpha(self.resolve_symbols(g))
             case "->=A":
-                self.func = lambda g: not Thing.are_descending_or_equal_alpha(self.resolve_symbols(g))
+                self.func = lambda g: not ThingSort.are_descending_or_equal_alpha(self.resolve_symbols(g))
 
             # Immediately adjacent, whether ascending, descending, or ambivalent
             case "adj":
-                self.func = lambda g: Thing.are_adjacent(self.resolve_symbols(g))
+                self.func = lambda g: ThingSort.are_adjacent(self.resolve_symbols(g))
             case "-adj":
-                self.func = lambda g: not Thing.are_adjacent(self.resolve_symbols(g))
+                self.func = lambda g: not ThingSort.are_adjacent(self.resolve_symbols(g))
             case "adj<":
-                self.func = lambda g: Thing.are_adjacent_ascending(self.resolve_symbols(g))
+                self.func = lambda g: ThingSort.are_adjacent_ascending(self.resolve_symbols(g))
             case "adj>":
-                self.func = lambda g: Thing.are_adjacent_descending(self.resolve_symbols(g))
+                self.func = lambda g: ThingSort.are_adjacent_descending(self.resolve_symbols(g))
             case "-adj<":
-                self.func = lambda g: not Thing.are_adjacent_ascending(self.resolve_symbols(g))
+                self.func = lambda g: not ThingSort.are_adjacent_ascending(self.resolve_symbols(g))
             case "-adj>":
-                self.func = lambda g: not Thing.are_adjacent_descending(self.resolve_symbols(g))
+                self.func = lambda g: not ThingSort.are_adjacent_descending(self.resolve_symbols(g))
 
             # Immediately adjacent, whether ascending, descending, or ambivalent (alpha)
             case "adjA":
-                self.func = lambda g: Thing.are_adjacent_alpha(self.resolve_symbols(g))
+                self.func = lambda g: ThingSort.are_adjacent_alpha(self.resolve_symbols(g))
             case "-adjA":
-                self.func = lambda g: not Thing.are_adjacent_alpha(self.resolve_symbols(g))
+                self.func = lambda g: not ThingSort.are_adjacent_alpha(self.resolve_symbols(g))
             case "adj<A":
-                self.func = lambda g: Thing.are_adjacent_ascending_alpha(self.resolve_symbols(g))
+                self.func = lambda g: ThingSort.are_adjacent_ascending_alpha(self.resolve_symbols(g))
             case "adj>A":
-                self.func = lambda g: Thing.are_adjacent_descending_alpha(self.resolve_symbols(g))
+                self.func = lambda g: ThingSort.are_adjacent_descending_alpha(self.resolve_symbols(g))
             case "-adj<A":
-                self.func = lambda g: not Thing.are_adjacent_ascending_alpha(self.resolve_symbols(g))
+                self.func = lambda g: not ThingSort.are_adjacent_ascending_alpha(self.resolve_symbols(g))
             case "-adj>A":
-                self.func = lambda g: not Thing.are_adjacent_descending_alpha(self.resolve_symbols(g))
+                self.func = lambda g: not ThingSort.are_adjacent_descending_alpha(self.resolve_symbols(g))
 
             # Meta relationships
             case 'or':

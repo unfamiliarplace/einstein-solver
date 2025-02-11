@@ -74,7 +74,9 @@ class Thing:
 
     def get_alphabetical_value(self: Thing) -> int:
         return ''.join(c.casefold() for c in self.id)
-    
+
+class ThingSort:
+
     @staticmethod
     def are_ascending(ts: list[Thing]) -> bool:
         """Strict: every item must actually be lt than the next."""
