@@ -33,7 +33,6 @@ def find_solutions(g: Game) -> list[list[Thing]]:
 
     g.reset_relationships()
 
-    good = 0
     for world in progressbar.progressbar(get_all_worlds(g)):
         realize_world(world)
 

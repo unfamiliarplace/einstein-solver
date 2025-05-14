@@ -157,12 +157,7 @@ class Clue:
         self.rules = []
 
     def validate(self: Clue, g: Game) -> bool:
-        for r in self.rules:
-            if not r.evaluate(g):
-                # print('RULE FAILED:', str(r)[:40])
-                return False
-        
-        return True
+        return all(r.evaluate(g) for r in self.rules)
     
     def __repr__(self: Clue) -> str:
         return '\n'.join((str(r) for r in self.rules))
