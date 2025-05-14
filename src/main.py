@@ -55,6 +55,7 @@ def run() -> None:
     path = pick_path(paths)
 
     g = Game.parse_json(path)
+    g.optimize_clues()
     solutions = solve.find_solutions(g)
 
     print(f'\nFound {len(solutions)} solution(s).')

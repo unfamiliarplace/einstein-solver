@@ -149,6 +149,13 @@ class Rule:
             return f'{self.json["func"]}({",".join((str(s) for s in self.symbols))})'
         else:
             return f'{self.json["func"]}({",".join((str(r) for r in self.subrules))})'
+    
+    def get_complexity(self: Rule) -> int:
+        """
+        Return a number indicating the complexity (a function of the subrules).
+        The 'link' function is also slower than others, so score it higher.
+        """
+        return 1 + ('link' in self.json['func']) + sum(r.get_complexity() for r in self.subrules)
 
 class Clue:
     rules: list[Rule]
@@ -161,6 +168,18 @@ class Clue:
     
     def __repr__(self: Clue) -> str:
         return '\n'.join((str(r) for r in self.rules))
+    
+    def optimize_rules(self: Clue) -> None:
+        """
+        Sort rules by ascending complexity to optimize evaluation.
+        """
+        self.rules.sort(key=lambda r: r.get_complexity())
+
+    def get_complexity(self: Clue) -> int:
+        """
+        Return the sum of the complexity of this Clue's Rules.
+        """
+        return sum(r.get_complexity() for r in self.rules)
 
 class Game:
     keys: dict[str, Thing]
@@ -194,6 +213,14 @@ class Game:
             s += f'{kind:{n}} {things}\n'
         
         return s
+    
+    def optimize_clues(self: Game) -> None:
+        """
+        Sort Clues by ascending complexity to optimize evaluation.
+        """
+        for clue in self.clues:
+            clue.optimize_rules()
+        self.clues.sort(key=lambda c: c.get_complexity())
     
     @staticmethod
     def parse_json(path: Path) -> Game:
