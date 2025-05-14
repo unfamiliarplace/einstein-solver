@@ -20,9 +20,12 @@ Although the solver is fairly powerful, the "UX" is not very refined and require
             - `not`, `and`, `or`, `nor`, `nand`, `xor`: boolean operators whose arguments will be lists of rules instead of things. All of these can take arbitrary numbers of rules.
             - sorting functions:
               - `<` `>` `<=` `>=`: Whether two or more objects can be numerically sorted in this order. For example, if we know that `Jason`'s favourite month comes before `Richard`'s, we could mark `Jason::Month` and `Richard::Month` as being in a `<` relationship.
-              - `adj`, `adj<`, `adj>` (adacent): Whether two or more objects are adjacent when ordered. For example, if a set of things is `1`, `3`, `6`, and `8`, then `adj` with arguments `3` and `6` is `True`.
+              - `adj`, `adj<`, `adj>` (adjacent): Whether two or more objects are adjacent when ordered. For example, if a set of things is `1`, `3`, `6`, and `8`, then `adj` with arguments `3` and `6` is `True`.
               - These can all be prefixed by `-` to stipulate their negation.
               - These can all be suffixed by `A` to use alphabetic sorting instead of numerical sorting.
+            - math functions:
+              - `+` `-` `*` `/`: Supply a numerical first argument. The result of the given operation on the remaining arguments must equal that one (respectively addition, subtraction, multiplication, division). For example, with the function `+` and arguments `5`, `Jason::Number`, `Richard::Number`, the result of summing those two numbers must be `5`.
+              - These can all be prefixed by `-` to stipulate their negation.
         - `args`. A list of symbols or, for the boolean operators, rules. A symbol can be the name of a thing, e.g. `Jason`, or it can be a relationship, e.g. `Jason::Food` (the `Food` asssociated with `Jason`). Relationships can be any depth.
 
 2. Run `main.py` and select your game. All possible solutions will be presented one at a time.

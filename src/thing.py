@@ -1,5 +1,6 @@
 from __future__ import annotations
 import itertools
+import math
 
 class Thing:
     id: str
@@ -74,6 +75,41 @@ class Thing:
 
     def get_alphabetical_value(self: Thing) -> int:
         return ''.join(c.casefold() for c in self.id)
+
+class ThingMath:
+    epsilon: float = 0.001
+
+    @staticmethod
+    def is_near(expected: int|float, result: int|float) -> bool:
+        return abs(result - expected) < ThingMath.epsilon
+    
+    @staticmethod
+    def get_numerical_values(ts: list[Thing]) -> list[int]:
+        return list(t.get_numerical_value() for t in ts)
+
+    @staticmethod
+    def sum_is(expected: int|float, ts: list[Thing]) -> bool:
+        return ThingMath.is_near(expected, sum(ThingMath.get_numerical_values(ts)))
+
+    @staticmethod
+    def difference_is(expected: int|float, ts: list[Thing]) -> bool:
+        result = ts[0].get_numerical_value()
+        for t in ts[1:]:
+            result -= t.get_numerical_value()
+
+        return ThingMath.is_near(expected, result)
+
+    @staticmethod
+    def product_is(expected: int|float, ts: list[Thing]) -> bool:
+        return ThingMath.is_near(expected, math.prod(ThingMath.get_numerical_values(ts)))
+
+    @staticmethod
+    def quotient_is(expected: int|float, ts: list[Thing]) -> bool:
+        result = ts[0].get_numerical_value()
+        for t in ts[1:]:
+            result /= t.get_numerical_value()
+
+        return ThingMath.is_near(expected, result)
 
 class ThingSort:
 

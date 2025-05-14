@@ -1,5 +1,5 @@
 from __future__ import annotations
-from thing import Thing, ThingSort
+from thing import Thing, ThingSort, ThingMath
 from pathlib import Path
 import json
 
@@ -117,6 +117,24 @@ class Rule:
                 self.func = lambda g: not ThingSort.are_adjacent_ascending_alpha(self.resolve_symbols(g))
             case "-adj>A":
                 self.func = lambda g: not ThingSort.are_adjacent_descending_alpha(self.resolve_symbols(g))
+
+            # Math
+            case "+":
+                self.func = lambda g: ThingMath.sum_is(self.args[0], self.resolve_symbols(g))
+            case "-":
+                self.func = lambda g: ThingMath.difference_is(self.args[0], self.resolve_symbols(g))
+            case "*":
+                self.func = lambda g: ThingMath.product_is(self.args[0], self.resolve_symbols(g))
+            case "/":
+                self.func = lambda g: ThingMath.quotient_is(self.args[0], self.resolve_symbols(g))
+            case "-+":
+                self.func = lambda g: not ThingMath.sum_is(self.args[0], self.resolve_symbols(g))
+            case "--":
+                self.func = lambda g: not ThingMath.difference_is(self.args[0], self.resolve_symbols(g))
+            case "-*":
+                self.func = lambda g: not ThingMath.product_is(self.args[0], self.resolve_symbols(g))
+            case "-/":
+                self.func = lambda g: not ThingMath.quotient_is(self.args[0], self.resolve_symbols(g))
 
             # Meta relationships
             case 'or':
