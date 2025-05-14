@@ -1,0 +1,225 @@
+{
+    "kinds": [
+        {
+            "name": "Person",
+            "things": [
+                "Gabe",
+                "Hermione",
+                "Isaac",
+                "Julio",
+                "Kate"                
+            ]
+        },
+        {
+            "name": "Flower",
+            "things": [
+                "Iris",
+                "Lily",
+                "Pansy",
+                "Petunia",
+                "Tulip"               
+            ]
+        },
+        {
+            "name": "Colour",
+            "things": [
+                "Green",
+                "Red",
+                "Blue",
+                "White",
+                "Yellow"
+            ]
+        },
+        {
+            "name": "Number",
+            "things": [
+                "2",
+                "4",
+                "6",
+                "8",
+                "10"
+            ]
+        }
+    ],
+    "clues": [
+        [
+            {
+                "func": "-link",
+                "args": ["Hermione", "White", "4", "Pansy", "Yellow"]
+            }
+        ],
+        [
+            {
+                "func": "or",
+                "args": [
+                    {
+                        "func": "and",
+                        "args": [
+                            {
+                                "func": "same",
+                                "args": [
+                                    "Lily::Number",
+                                    "4"
+                                ]
+                            },
+                            {
+                                "func": "same",
+                                "args": [
+                                    "Blue::Number",
+                                    "2"
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "func": "and",
+                        "args": [
+                            {
+                                "func": "same",
+                                "args": [
+                                    "Lily::Number",
+                                    "8"
+                                ]
+                            },
+                            {
+                                "func": "same",
+                                "args": [
+                                    "Blue::Number",
+                                    "4"
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        [
+            {
+                "func": "and",
+                "args": [
+                    {
+                        "func": "adj",
+                        "args": [
+                            "Isaac::Number",
+                            "Kate::Number"
+                        ]
+                    },
+                    {
+                        "func": "adj",
+                        "args": [
+                            "Kate::Number",
+                            "Red::Number"
+                        ]
+                    }
+                ]
+            }
+        ],
+        [
+            {
+                "func": "-same",
+                "args": [
+                    "Gabe::Flower",
+                    "Iris"
+                ]
+            },
+            {
+                "func": "-same",
+                "args": [
+                    "Gabe::Colour",
+                    "Red"
+                ]
+            },
+            {
+                "func": "same",
+                "args": [
+                    "Gabe::Number",
+                    "8"
+                ]
+            }
+        ],
+        [
+            {
+                "func": "same",
+                "args": [
+                    "Hermione::Colour",
+                    "Red"
+                ]
+            },
+            {
+                "func": "same",
+                "args": [
+                    "Hermione::Flower",
+                    "Petunia"
+                ]
+            }
+        ],
+        [
+            {
+                "func": "-same",
+                "args": [
+                    "Kate::Number",
+                    "10"
+                ]
+            },
+            {
+                "func": "or",
+                "args": [
+                    {
+                        "func": "and",
+                        "args": [
+                            {
+                                "func": "same",
+                                "args": [
+                                    "10::Colour",
+                                    "Blue"
+                                ]
+                            },
+                            {
+                                "func": "same",
+                                "args": [
+                                    "Kate::Flower",
+                                    "Iris"
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "func": "and",
+                        "args": [
+                            {
+                                "func": "same",
+                                "args": [
+                                    "10::Flower",
+                                    "Iris"
+                                ]
+                            },
+                            {
+                                "func": "same",
+                                "args": [
+                                    "Kate::Colour",
+                                    "Blue"
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        [
+            {
+                "func": "same",
+                "args": [
+                    "Isaac::Number",
+                    "2"
+                ]
+            },
+            {
+                "func": "same",
+                "args": [
+                    "Gabe::Colour",
+                    "White"
+                ]
+            }
+        ]
+    ]
+}
