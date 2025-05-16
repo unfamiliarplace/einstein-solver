@@ -44,52 +44,17 @@
     "clues": [
         [
             {
-                "func": "-link",
+                "func": "!link",
                 "args": ["Hermione", "White", "4", "Pansy", "Yellow"]
             }
         ],
         [
             {
-                "func": "or",
+                "func": "/",
                 "args": [
-                    {
-                        "func": "and",
-                        "args": [
-                            {
-                                "func": "same",
-                                "args": [
-                                    "Lily::Number",
-                                    "4"
-                                ]
-                            },
-                            {
-                                "func": "same",
-                                "args": [
-                                    "Blue::Number",
-                                    "2"
-                                ]
-                            }
-                        ]
-                    },
-                    {
-                        "func": "and",
-                        "args": [
-                            {
-                                "func": "same",
-                                "args": [
-                                    "Lily::Number",
-                                    "8"
-                                ]
-                            },
-                            {
-                                "func": "same",
-                                "args": [
-                                    "Blue::Number",
-                                    "4"
-                                ]
-                            }
-                        ]
-                    }
+                    "2",
+                    "Lily::Number",
+                    "Blue::Number"
                 ]
             }
         ],
@@ -116,14 +81,14 @@
         ],
         [
             {
-                "func": "-same",
+                "func": "!same",
                 "args": [
                     "Gabe::Flower",
                     "Iris"
                 ]
             },
             {
-                "func": "-same",
+                "func": "!same",
                 "args": [
                     "Gabe::Colour",
                     "Red"
@@ -155,7 +120,7 @@
         ],
         [
             {
-                "func": "-same",
+                "func": "!same",
                 "args": [
                     "Kate::Number",
                     "10"

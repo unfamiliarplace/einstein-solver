@@ -31,7 +31,7 @@
     "clues": [
         [
             {
-                "func": "-link",
+                "func": "!link",
                 "args": ["Pretzels", "Jake"]
             }            
         ],
@@ -52,11 +52,11 @@
         ],
         [
             {
-                "func": "-link",
+                "func": "!link",
                 "args": ["Carrots::Person", "Table 3"]
             },
             {
-                "func": "-link",
+                "func": "!link",
                 "args": ["Jake", "Table 3"]
             }
         ],
@@ -68,33 +68,33 @@
         ],
         [
             {
-                "func": "-link",
+                "func": "!link",
                 "args": ["Ali", "Table 3"]
             },
             {
-                "func": "-link",
+                "func": "!link",
                 "args": ["Ali", "Table 2"]
             }
         ],
         [
             {
-                "func": "-link",
+                "func": "!link",
                 "args": ["Jake", "Table 3"]
             }
         ],
         [
             {
-                "func": "-link",
+                "func": "!link",
                 "args": ["Cupcakes::Person", "Table 1"]
             },
             {
-                "func": "-link",
+                "func": "!link",
                 "args": ["Cupcakes::Person", "Table 2"]
             }
         ],
         [
             {
-                "func": "-link",
+                "func": "!link",
                 "args": ["Ali", "Carrots"]
             }
         ],
@@ -109,7 +109,7 @@
         [
 
             {
-                "func": "-link",
+                "func": "!link",
                 "args": ["Mimi", "Table 1"]
             }
         ],

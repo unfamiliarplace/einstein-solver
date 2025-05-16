@@ -40,31 +40,31 @@
     "clues": [
         [
             {
-                "func": "-link",
+                "func": "!link",
                 "args": ["Lyon's", "Yvette"]
             },
             {
-                "func": "-link",
+                "func": "!link",
                 "args": ["Yvette", "14.99"]
             }
         ],
         [
             {
-                "func": "-link",
+                "func": "!link",
                 "args": ["Irene's", "16.99"]
             },
             {
-                "func": "-link",
+                "func": "!link",
                 "args": ["Lyon's", "16.99"]
             }
         ],
         [
             {
-                "func": "-link",
+                "func": "!link",
                 "args": ["Lyon's", "17.99"]
             },
             {
-                "func": "-link",
+                "func": "!link",
                 "args": ["Leon", "Pork"]
             },
             {
@@ -149,7 +149,7 @@
         ],
         [
             {
-                "func": "-link",
+                "func": "!link",
                 "args": ["Yvette", "Irene's"]
             },
             {

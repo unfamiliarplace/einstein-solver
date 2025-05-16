@@ -140,59 +140,59 @@
         ],
         [
             {
-                "func": "-link",
+                "func": "!link",
                 "args": ["Anne", "A"]
             },
             {
-                "func": "-link",
+                "func": "!link",
                 "args": ["Anthony", "A"]
             },
             {
-                "func": "-link",
+                "func": "!link",
                 "args": ["Bruce", "B"]
             },
             {
-                "func": "-link",
+                "func": "!link",
                 "args": ["Bernadette", "B"]
             },
             {
-                "func": "-link",
+                "func": "!link",
                 "args": ["Carl", "C"]
             },
             {
-                "func": "-link",
+                "func": "!link",
                 "args": ["Celine", "C"]
             },
             {
-                "func": "-link",
+                "func": "!link",
                 "args": ["Dahlia", "D"]
             },
             {
-                "func": "-link",
+                "func": "!link",
                 "args": ["Daniel", "D"]
             }
         ],
         [
             {
-                "func": "-link",
+                "func": "!link",
                 "args": ["Anthony", "Romance"]
             },
             {
-                "func": "-link",
+                "func": "!link",
                 "args": ["Anthony", "Thriller"]
             }
         ],
         [
             {
-                "func": "-link",
+                "func": "!link",
                 "args": ["Sci-Fi", "A"]
             },
             {
-                "func": "-link",
+                "func": "!link",
                 "args": ["Sci-Fi", "Anne"]
             },
             {
-                "func": "-link",
+                "func": "!link",
                 "args": ["Sci-Fi", "Dahlia"]
             }
         ],
@@ -231,21 +231,21 @@
         ],
         [
             {
-                "func": "-link",
+                "func": "!link",
                 "args": ["Anne", "Thriller"]
             },
             {
-                "func": "-link",
+                "func": "!link",
                 "args": ["Carl", "Musical"]
             },
             {
-                "func": "-link",
+                "func": "!link",
                 "args": ["Bernadette", "D"]
             }
         ],
         [
             {
-                "func": "-adjA",
+                "func": "!adjA",
                 "args": ["Bruce::Theater", "Carl::Theater"]
             }
 

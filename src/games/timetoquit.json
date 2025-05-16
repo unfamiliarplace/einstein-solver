@@ -45,7 +45,7 @@
 
         [
             {
-                "func": "-link",
+                "func": "!link",
                 "args": ["Kiwis", "07-08", "People", "Trenton", "Guavas"]
             }
         ],
@@ -57,7 +57,7 @@
         ],
         [
             {
-                "func": "-link",
+                "func": "!link",
                 "args": ["Time", "Guavas"]
             }
         ],
@@ -102,11 +102,11 @@
                 ]
             },
             {
-                "func": "-link",
+                "func": "!link",
                 "args": ["Trenton", "Apples"]
             },
             {
-                "func": "-link",
+                "func": "!link",
                 "args": ["09-23", "US Weekly"]
             }
         ],
@@ -124,13 +124,13 @@
         ],
         [
             {
-                "func": "-link",
+                "func": "!link",
                 "args": ["Newsweek", "Ricky"]
             }
         ],
         [
             {
-                "func": "-link",
+                "func": "!link",
                 "args": ["Kiwis", "Roger"]
             }
         ],

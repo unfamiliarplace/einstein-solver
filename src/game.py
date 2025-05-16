@@ -36,18 +36,24 @@ class Rule:
 
         f, args = json['func'], json['args']
 
+        # Extract the operation argument if it's math
+        math = f in {'+', '-', '*', '/', '!+', '!-', '!*', '!/'}
+        if math:
+            math_result = float(args[0])
+            args = args[1:]
+
         match f:
 
             # Link
             case 'link':
                 self.func = lambda g: Thing.are_linked(self.resolve_symbols(g))
-            case '-link':
+            case '!link':
                 self.func = lambda g: not Thing.are_linked(self.resolve_symbols(g))
 
             # Same
             case 'same':
                 self.func = lambda g: len(set(self.resolve_symbols(g))) == 1
-            case '-same':
+            case '!same':
                 self.func = lambda g: len(set(self.resolve_symbols(g))) > 1
 
             # Ascending, descending
@@ -55,9 +61,9 @@ class Rule:
                 self.func = lambda g: ThingSort.are_ascending(self.resolve_symbols(g))
             case ">":
                 self.func = lambda g: ThingSort.are_descending(self.resolve_symbols(g))
-            case "-<":
+            case "!<":
                 self.func = lambda g: not ThingSort.are_ascending(self.resolve_symbols(g))
-            case "->":
+            case "!>":
                 self.func = lambda g: not ThingSort.are_descending(self.resolve_symbols(g))
 
             # Ascending, descending (non-strict)
@@ -65,9 +71,9 @@ class Rule:
                 self.func = lambda g: ThingSort.are_ascending_or_equal(self.resolve_symbols(g))
             case ">=":
                 self.func = lambda g: ThingSort.are_descending_or_equal(self.resolve_symbols(g))
-            case "-<=":
+            case "!<=":
                 self.func = lambda g: not ThingSort.are_ascending_or_equal(self.resolve_symbols(g))
-            case "->=":
+            case "!>=":
                 self.func = lambda g: not ThingSort.are_descending_or_equal(self.resolve_symbols(g))
 
             # Ascending, descending (alpha)
@@ -75,9 +81,9 @@ class Rule:
                 self.func = lambda g: ThingSort.are_ascending_alpha(self.resolve_symbols(g))
             case ">A":
                 self.func = lambda g: ThingSort.are_descending_alpha(self.resolve_symbols(g))
-            case "-<A":
+            case "!<A":
                 self.func = lambda g: not ThingSort.are_ascending_alpha(self.resolve_symbols(g))
-            case "->A":
+            case "!>A":
                 self.func = lambda g: not ThingSort.are_descending_alpha(self.resolve_symbols(g))
 
             # Ascending, descending (non-strict alpha)
@@ -85,56 +91,56 @@ class Rule:
                 self.func = lambda g: ThingSort.are_ascending_or_equal_alpha(self.resolve_symbols(g))
             case ">=A":
                 self.func = lambda g: ThingSort.are_descending_or_equal_alpha(self.resolve_symbols(g))
-            case "-<=A":
+            case "!<=A":
                 self.func = lambda g: not ThingSort.are_ascending_or_equal_alpha(self.resolve_symbols(g))
-            case "->=A":
+            case "!>=A":
                 self.func = lambda g: not ThingSort.are_descending_or_equal_alpha(self.resolve_symbols(g))
 
             # Immediately adjacent, whether ascending, descending, or ambivalent
             case "adj":
                 self.func = lambda g: ThingSort.are_adjacent(self.resolve_symbols(g))
-            case "-adj":
+            case "!adj":
                 self.func = lambda g: not ThingSort.are_adjacent(self.resolve_symbols(g))
             case "adj<":
                 self.func = lambda g: ThingSort.are_adjacent_ascending(self.resolve_symbols(g))
             case "adj>":
                 self.func = lambda g: ThingSort.are_adjacent_descending(self.resolve_symbols(g))
-            case "-adj<":
+            case "!adj<":
                 self.func = lambda g: not ThingSort.are_adjacent_ascending(self.resolve_symbols(g))
-            case "-adj>":
+            case "!adj>":
                 self.func = lambda g: not ThingSort.are_adjacent_descending(self.resolve_symbols(g))
 
             # Immediately adjacent, whether ascending, descending, or ambivalent (alpha)
             case "adjA":
                 self.func = lambda g: ThingSort.are_adjacent_alpha(self.resolve_symbols(g))
-            case "-adjA":
+            case "!adjA":
                 self.func = lambda g: not ThingSort.are_adjacent_alpha(self.resolve_symbols(g))
             case "adj<A":
                 self.func = lambda g: ThingSort.are_adjacent_ascending_alpha(self.resolve_symbols(g))
             case "adj>A":
                 self.func = lambda g: ThingSort.are_adjacent_descending_alpha(self.resolve_symbols(g))
-            case "-adj<A":
+            case "!adj<A":
                 self.func = lambda g: not ThingSort.are_adjacent_ascending_alpha(self.resolve_symbols(g))
-            case "-adj>A":
+            case "!adj>A":
                 self.func = lambda g: not ThingSort.are_adjacent_descending_alpha(self.resolve_symbols(g))
 
             # Math
             case "+":
-                self.func = lambda g: ThingMath.sum_is(self.args[0], self.resolve_symbols(g))
+                self.func = lambda g: ThingMath.sum_is(math_result, self.resolve_symbols(g))
             case "-":
-                self.func = lambda g: ThingMath.difference_is(self.args[0], self.resolve_symbols(g))
+                self.func = lambda g: ThingMath.difference_is(math_result, self.resolve_symbols(g))
             case "*":
-                self.func = lambda g: ThingMath.product_is(self.args[0], self.resolve_symbols(g))
+                self.func = lambda g: ThingMath.product_is(math_result, self.resolve_symbols(g))
             case "/":
-                self.func = lambda g: ThingMath.quotient_is(self.args[0], self.resolve_symbols(g))
-            case "-+":
-                self.func = lambda g: not ThingMath.sum_is(self.args[0], self.resolve_symbols(g))
-            case "--":
-                self.func = lambda g: not ThingMath.difference_is(self.args[0], self.resolve_symbols(g))
-            case "-*":
-                self.func = lambda g: not ThingMath.product_is(self.args[0], self.resolve_symbols(g))
-            case "-/":
-                self.func = lambda g: not ThingMath.quotient_is(self.args[0], self.resolve_symbols(g))
+                self.func = lambda g: ThingMath.quotient_is(math_result, self.resolve_symbols(g))
+            case "!+":
+                self.func = lambda g: not ThingMath.sum_is(math_result, self.resolve_symbols(g))
+            case "!-":
+                self.func = lambda g: not ThingMath.difference_is(math_result, self.resolve_symbols(g))
+            case "!*":
+                self.func = lambda g: not ThingMath.product_is(math_result, self.resolve_symbols(g))
+            case "!/":
+                self.func = lambda g: not ThingMath.quotient_is(math_result, self.resolve_symbols(g))
 
             # Meta relationships
             case 'or':
@@ -145,10 +151,10 @@ class Rule:
                 self.func = lambda g: sum(r.evaluate(g) for r in self.subrules) == 1
             case 'nand':
                 self.func = lambda g: sum(r.evaluate(g) for r in self.subrules) < len(self.subrules)
-            case 'nor' | 'not' | '-':
+            case 'nor' | 'not' | '!':
                 self.func = lambda g: not any(r.evaluate(g) for r in self.subrules)
         
-        basic = f not in {'or', 'and', 'xor', 'nand', 'nor', 'not', '-'}
+        basic = f not in {'or', 'and', 'xor', 'nand', 'nor', 'not', '!'}
 
         if basic:
             self.symbols = list(Symbol(arg) for arg in args)
