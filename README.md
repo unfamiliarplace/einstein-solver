@@ -1,6 +1,11 @@
 # einstein-solver
 A solver for Einstein puzzles.
 
+## Dependencies
+
+- [progressbar2](https://pypi.org/project/progressbar2/) (perhaps one day I'll make it optional)
+- [tabulate](https://pypi.org/project/tabulate/) (same)
+
 ## Usage
 
 Although the solver is fairly powerful, the "UX" is not very refined and requires some finagling.
