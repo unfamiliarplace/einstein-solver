@@ -99,12 +99,12 @@ class Rule:
             # Immediately adjacent, whether ascending, descending, or ambivalent
             case "adj":
                 self.func = lambda g: ThingSort.are_adjacent(self.resolve_symbols(g))
-            case "!adj":
-                self.func = lambda g: not ThingSort.are_adjacent(self.resolve_symbols(g))
             case "adj<":
                 self.func = lambda g: ThingSort.are_adjacent_ascending(self.resolve_symbols(g))
             case "adj>":
                 self.func = lambda g: ThingSort.are_adjacent_descending(self.resolve_symbols(g))
+            case "!adj":
+                self.func = lambda g: not ThingSort.are_adjacent(self.resolve_symbols(g))
             case "!adj<":
                 self.func = lambda g: not ThingSort.are_adjacent_ascending(self.resolve_symbols(g))
             case "!adj>":
@@ -113,12 +113,12 @@ class Rule:
             # Immediately adjacent, whether ascending, descending, or ambivalent (alpha)
             case "adjA":
                 self.func = lambda g: ThingSort.are_adjacent_alpha(self.resolve_symbols(g))
-            case "!adjA":
-                self.func = lambda g: not ThingSort.are_adjacent_alpha(self.resolve_symbols(g))
             case "adj<A":
                 self.func = lambda g: ThingSort.are_adjacent_ascending_alpha(self.resolve_symbols(g))
             case "adj>A":
                 self.func = lambda g: ThingSort.are_adjacent_descending_alpha(self.resolve_symbols(g))
+            case "!adjA":
+                self.func = lambda g: not ThingSort.are_adjacent_alpha(self.resolve_symbols(g))
             case "!adj<A":
                 self.func = lambda g: not ThingSort.are_adjacent_ascending_alpha(self.resolve_symbols(g))
             case "!adj>A":
@@ -223,6 +223,7 @@ class Game:
             t.reset_relationships()
 
     def validate_all_clues(self: Game) -> bool:
+        """This is written verbosely so as to make debugging easier."""
         for clue in self.clues:
             if not clue.validate(self):
                 # print('CLUE FAILED:', clue)
