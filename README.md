@@ -3,8 +3,10 @@ A solver for Einstein puzzles.
 
 ## Dependencies
 
-- [progressbar2](https://pypi.org/project/progressbar2/) (perhaps one day I'll make it optional)
-- [tabulate](https://pypi.org/project/tabulate/) (same)
+- [progressbar2](https://pypi.org/project/progressbar2/) for tracking the solution search process
+- [tabulate](https://pypi.org/project/tabulate/) for pretty-printing results
+
+A future update may make these cosmetic features optional to remove the dependencies.
 
 ## Usage
 
@@ -90,9 +92,9 @@ This is the same sort of logic as the second clue:
 "args": ["Time::Last Day", "Ricky::Last Day"]
 ```
 
-5. "Of Trenton and the person who grows apples, one is leaving the company on September 2 and the other subscribed to US Weekly."
+5. "Of Trenton and the person who grows apples, one is leaving the company on September 23 and the other subscribed to US Weekly."
 
-OK, now this one is tough. It seems to mean that either Trenton is leaving on September 2 `and` the apple-grower is subscribed to US Weekly, or else (`xor`) Trenton is subscribed to US Weekly `and` the apple-grower is leaving on September 2. This leads to a triply nested structure using `link` at the bottom level:
+OK, now this one is tough. It seems to mean that either Trenton is leaving on September 23 `and` the apple-grower is subscribed to US Weekly, or else (`xor`) Trenton is subscribed to US Weekly `and` the apple-grower is leaving on September 2. This leads to a triply nested structure using `link` at the bottom level:
 
 ```
 "func": "xor",
@@ -102,7 +104,7 @@ OK, now this one is tough. It seems to mean that either Trenton is leaving on Se
         "args": [
             {
                 "func": "link",
-                "args": ["Trenton", "09-02"]
+                "args": ["Trenton", "09-23"]
             },
             {
                 "func": "link",
@@ -115,7 +117,7 @@ OK, now this one is tough. It seems to mean that either Trenton is leaving on Se
         "args": [
             {
                 "func": "link",
-                "args": ["Apples", "09-02"]
+                "args": ["Apples", "09-23"]
             },
             {
                 "func": "link",
@@ -126,7 +128,7 @@ OK, now this one is tough. It seems to mean that either Trenton is leaving on Se
 ]
 ```
 
-This is not actually quite enough, though. These rules don't yet capture one implication of the clue: that Trenton is not the apple-grower and that the person who subscribed to US Weekly did not leave on September 2. We should thus two add more rules to our clue:
+This is not actually quite enough, though. These rules don't yet capture one implication of the clue: that Trenton is not the apple-grower and that the person who subscribed to US Weekly did not leave on September 23. We should thus two add more rules to our clue:
 
 ```
 "func": "!link",
