@@ -1,0 +1,174 @@
+{
+    "kinds": [
+        {
+            "name": "Person",
+            "things": [
+                "Maddy",
+                "Morgan",
+                "KJ",
+                "Ben"
+            ]
+        },
+        {
+            "name": "Colour",
+            "things": [
+                "Yellow",
+                "Red",
+                "Blue",
+                "Green"
+            ]
+        },
+        {
+            "name": "Eggs Done",
+            "things": [
+                "4 Done",
+                "6 Done",
+                "7 Done",
+                "8 Done"
+            ]
+        },
+        {
+            "name": "Eggs Left",
+            "things": [
+                "4 Left",
+                "5 Left",
+                "6 Left",
+                "8 Left"
+            ]
+        },
+        {
+            "name": "Dye Type",
+            "things": [
+                "Pastel",
+                "Neon",
+                "Marble",
+                "Shiny"
+            ]
+        }
+    ],
+    "clues": [
+        [
+            {
+                "func": "same",
+                "args": [
+                    "Maddy::Dye Type",
+                    "Shiny"
+                ]
+            }
+        ],
+        [
+            {
+                "func": "link",
+                "args": [
+                    "Neon",
+                    "4 Left"
+                ]
+            }
+        ],
+        [
+            {
+                "func": "xor",
+                "args": [
+                    {
+                        "func": "same",
+                        "args": [
+                            "Ben::Eggs Done",
+                            "6 Done"
+                        ]
+                    },
+                    {
+                        "func": "same",
+                        "args": [
+                            "Morgan::Eggs Done",
+                            "6 Done"
+                        ]
+                    }
+                ]
+            }
+        ],
+        [
+            {
+                "func": "xor",
+                "args": [
+                    {
+                        "func": "same",
+                        "args": [
+                            "Maddy::Eggs Done",
+                            "6 Done"
+                        ]
+                    },
+                    {
+                        "func": "same",
+                        "args": [
+                            "Maddy::Eggs Done",
+                            "7 Done"
+                        ]
+                    }
+                ]
+            }
+        ],
+        [
+            {
+                "func": "same",
+                "args": ["Morgan::Eggs Left", "5 Left"]
+            }
+        ],
+        [
+            {
+                "func": "same",
+                "args": ["Ben::Dye Type", "Marble"]
+            }
+        ],
+        [
+            {
+                "func": "link",
+                "args": ["Red", "5 Left"]
+            }
+        ],
+        [
+            {
+                "func": "xor",
+                "args": [
+                    {
+                        "func": "link",
+                        "args": [
+                            "6 Left",
+                            "7 Done"
+                        ]
+                    },
+                    {
+                        "func": "link",
+                        "args": [
+                            "6 Left",
+                            "8 Done"
+                        ]
+                    }
+                ]
+            }
+        ],
+        [
+            {
+                "func": "same",
+                "args": ["Maddy::Eggs Left", "6 Left"]
+            }
+        ],
+        [
+            {
+                "func": "same",
+                "args": ["Maddy::Colour", "Blue"]
+            }
+        ],
+        [
+            {
+                "func": "same",
+                "args": ["Morgan::Dye Type", "Pastel"]
+            }
+        ],
+        [
+            {
+                "func": "link",
+                "args": ["4 Done", "Green"]
+            }
+        ]
+    ]
+}
